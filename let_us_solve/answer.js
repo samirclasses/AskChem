@@ -32,7 +32,7 @@ function ans12()
 }    
 
 function ans11()
-{alert('Correct Answer is  B')
+{alert('Correct Answer is  A')
     
 }
 function ans1()
