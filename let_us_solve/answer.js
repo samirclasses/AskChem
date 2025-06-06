@@ -1,3 +1,7 @@
+function ans26()
+{alert('Correct Answer is  A')
+    
+}
 function ans25()
 {alert('Correct Answer is  C')
     
