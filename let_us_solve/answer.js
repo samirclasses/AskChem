@@ -1,3 +1,27 @@
+function ans38()
+{alert('Correct Answer is  D')
+    
+}
+function ans37()
+{alert('Correct Answer is  C')
+    
+}
+function ans36()
+{alert('Correct Answer is  B')
+    
+}
+function ans35()
+{alert('Correct Answer is  A')
+    
+}
+function ans34()
+{alert('Correct Answer is  C')
+    
+}
+function ans33()
+{alert('Correct Answer is  D')
+    
+}
 function ans32()
 {alert('Correct Answer is  D')
     
