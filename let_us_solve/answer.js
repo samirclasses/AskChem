@@ -1,3 +1,7 @@
+function ans43()
+{alert('Correct Answer is  C')
+    
+}
 function ans42()
 {alert('Correct Answer is  B')
     
