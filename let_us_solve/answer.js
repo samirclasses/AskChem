@@ -1,3 +1,7 @@
+function ans54()
+{alert('Correct Answer is  C')
+    
+}
 function ans53()
 {alert('Correct Answer is  D')
     
@@ -207,6 +211,7 @@ function ans9()
 function ans10()
 {alert('Correct Answer is  D')
 }
+
 
 
 
