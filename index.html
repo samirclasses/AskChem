@@ -60,7 +60,7 @@
              
          <div style="width:100%;">
              <div id="heading" style="background-color:white; "><font style="margin-left:5%; margin-top:20px;font-size:25px;font-weight:bolder;color:black; text-align:left;">Competitive Examinations Corner  &nbsp&nbsp&nbsp  ></font> </div>            
-             <hr><div class="comp_body" style="background-color:white;"><a href="mcq_competitive.html"style="margin-top:20px;font-size:25px;font-weight:bolder;color:black; text-align:center;">Multiple Choice Questions</a></div>
+             <hr><div class="comp_body" id="blink" style="background-color:white;color: #2d38be;transition: 0.5s;"><a href="mcq_competitive.html"style="margin-top:20px;font-size:25px;font-weight:bolder;color:black; text-align:center;">Multiple Choice Questions</a></div>
             <div class="comp_body" style="background-color:white;"><a href="test_yourself_comp.html"style="margin-top:20px;font-size:25px;font-weight:bolder;color:black; text-align:center;">Test Yourself </a></div>
             <div class="comp_body" style="background-color:white;"><a href="org_reactions.html"style="margin-top:20px;font-size:25px;font-weight:bolder;color:black; text-align:center;">Organic reactions & their Mechanism</a></div>
             <div class="comp_body" style="background-color:white;"><a href="important_law_test.html"style="margin-top:20px;font-size:25px;font-weight:bolder;color:black; text-align:center;">Important Laws,Tests and other Topics</a></div>
@@ -109,8 +109,15 @@
           <div id="author" style="height:50px;width:100%;background:white;color:black; font-weight:bold;border:1px solid black;">Creator of this Website: SAMIR DUTTA<br>
           Email-ID: samirj210@gmail.com
           </div>
-      </body>
+      <script type="text/javascript">
+            var blink = document.getElementById('blink');
+            setInterval(function() {
+                blink.style.opacity = (blink.style.opacity == 0 ? 1 : 0);
+            }, 1500);
+        </script>
+    </body>
 </html>
+
 
 
 
