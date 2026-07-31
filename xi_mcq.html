@@ -1,143 +1,405 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SD Classes | Class XI MCQ</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>পরমাণুর গঠন - Interactive Study & Quiz</title>
+    <!-- MathJax for rendering LaTeX formulas -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --secondary: #2563eb;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #1f2937;
+            --correct: #16a34a;
+            --incorrect: #dc2626;
+            --border: #e2e8f0;
+        }
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
 
-<style>
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
 
-body{
-    margin:0;
-    font-family:'Poppins', sans-serif;
-    background:linear-gradient(135deg,#1e3c72,#2a5298);
-    color:#333;
-}
+        header {
+            text-align: center;
+            background: var(--primary);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
 
-/* Header */
-header{
-    background:white;
-    padding:25px 0;
-    text-align:center;
-    box-shadow:0 4px 15px rgba(0,0,0,0.2);
-}
+        header h1 {
+            margin: 0 0 10px 0;
+            font-size: 1.8rem;
+        }
 
-header h1{
-    margin:0;
-    font-size:40px;
-    color:#1e3c72;
-    letter-spacing:1px;
-}
+        header p {
+            margin: 0;
+            opacity: 0.9;
+        }
 
-/* Container */
-.container{
-    width:90%;
-    max-width:1100px;
-    margin:40px auto;
-}
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            background: var(--card-bg);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
 
-/* Grid layout */
-.grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-    gap:20px;
-}
+        .filter-group select, .btn {
+            padding: 8px 16px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            font-size: 0.95rem;
+            cursor: pointer;
+            background: white;
+        }
 
-/* Card */
-.card{
-    background:white;
-    padding:20px;
-    border-radius:12px;
-    box-shadow:0 6px 15px rgba(0,0,0,0.2);
-    transition:0.3s;
-    filter:grayscale(100);
-}
+        .btn-primary {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            transition: background 0.2s;
+        }
 
-.card:hover{
-    transform:translateY(-5px);
-    box-shadow:0 10px 20px rgba(0,0,0,0.3);
-}
+        .btn-primary:hover {
+            background: #1d4ed8;
+        }
 
-/* Links */
-.card a{
-    text-decoration:none;
-    font-size:18px;
-    font-weight:500;
-    color:#1e3c72;
-   
-}
+        .score-board {
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: var(--primary);
+        }
 
-.card a:hover{
-    color:#e63946;
-    
-}
+        .question-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            border: 1px solid var(--border);
+        }
 
-/* Footer */
-footer{
-    text-align:center;
-    padding:15px;
-    background:white;
-    margin-top:40px;
-    font-size:14px;
-    color:#555;
-}
- 
-</style>
+        .question-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+        }
+
+        @media (min-width: 600px) {
+            .options-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .option-btn {
+            text-align: left;
+            padding: 12px 15px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: #f8fafc;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .option-btn:hover {
+            background: #edf2f7;
+            border-color: #cbd5e1;
+        }
+
+        .option-btn.correct {
+            background-color: #dcfce7 !important;
+            border-color: var(--correct) !important;
+            color: #14532d;
+            font-weight: bold;
+        }
+
+        .option-btn.incorrect {
+            background-color: #fee2e2 !important;
+            border-color: var(--incorrect) !important;
+            color: #7f1d1d;
+        }
+
+        .match-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+        }
+
+        .match-table th, .match-table td {
+            border: 1px solid var(--border);
+            padding: 8px 12px;
+            text-align: left;
+        }
+
+        .match-table th {
+            background: #f1f5f9;
+        }
+
+        .explanation {
+            margin-top: 15px;
+            padding: 10px;
+            background: #f0f9ff;
+            border-left: 4px solid var(--secondary);
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        .explanation.show {
+            display: block;
+        }
+    </style>
 </head>
-
 <body>
 
-<header>
-    <h1>Apex Chemistry</h1>
-    <h2>Class XI Chemistry MCQ</h2>
-</header>
-
 <div class="container">
-    <div class="grid">
+    <header>
+        <h1>পরমাণুর গঠন (Structure of Atom)</h1>
+        <p>Santra RAPID TEST - রসায়ন (Chemistry)</p>
+    </header>
 
-        <div class="card"><a href="MCQ/SomeBasicConcepts.pdf" target="_blank">Some Basic Concepts of Chemistry</a></div>
-        <div class="card"><a href="MCQ/basic_chem.html" target="_blank">Some Basic Concepts [HOTS]</a></div>
-         <div class="card"><a href="MCQ/basic_chem_mcq.html" target="_blank">Some Basic Concepts [Bengali]</a></div>
-                 
-        <div class="card"><a href="MCQ/AtomicStructure.pdf" target="_blank">Atomic Structure</a></div>
-        <div class="card"><a href="MCQ/atomic _struct_hots.html" target="_blank"> Atomic Structure [HOTS]</a></div>
-         <div class="card"><a href="MCQ/atomic_struct_beng.html" target="_blank"> Atomic Structure [Bengali]</a></div>
-        
-        <div class="card"><a href="MCQ/periodicTable.pdf" target="_blank">Periodic Table</a></div>
-        <div class="card"><a href="MCQ/mcq_periodic_table.pdf" target="_blank">Periodic Table MCQ PLUS</a></div>
-        
-        <div class="card"><a href="MCQ/chemicalBonding.pdf" target="_blank">Chemical Bonding</a></div>
-        <div class="card"><a href="MCQ/mcq_bonding.pdf" target="_blank">Chemical Bonding MCQ PLUS</a></div>
-        
-        <div class="card"><a href="MCQ/statesOfMatter.pdf" target="_blank">States of Matter</a></div>
-        
-        <div class="card"><a href="MCQ/thermodynamics.pdf" target="_blank">Chemical Thermodynamics</a></div>
-        
-        <div class="card"><a href="MCQ/chemicalEquilibrium.pdf" target="_blank">Chemical Equilibrium</a></div>
-        
-        <div class="card"><a href="MCQ/ionicEquilibrium.pdf" target="_blank">Ionic Equilibrium</a></div>
-        
-        <div class="card"><a href="MCQ/redoxReactions.pdf" target="_blank">Redox Reactions</a></div>
-        
-        <div class="card"><a href="MCQ/mcq_hydrogen.pdf" target="_blank">Hydrogen and Hydrides MCQ PLUS</a></div>
-
-        
-        <div class="card"><a href="MCQ/mcq_sblock.pdf" target="_blank">S-Block Elements MCQ PLUS</a></div>
-        
-        <div class="card"><a href="MCQ/mcq_group13.pdf" target="_blank">Group-13 Elements (Boron Family) MCQ PLUS</a></div>
-        
-        <div class="card"><a href="MCQ/mcq_group14.pdf" target="_blank">Group-14 Elements (Carbon Family) MCQ PLUS</a></div>
-        
-         <div class="card"><a href="https://samirclasses.github.io/Chemistry-MCQ-Quiz/organic-1.html" target="_blank">Organic Chemistry</a></div>
-
+    <div class="controls">
+        <div class="filter-group">
+            <label for="typeFilter"><strong>প্রশ্ন নির্বাচন করুন:</strong> </label>
+            <select id="typeFilter" onchange="filterQuestions()">
+                <option value="all">সমস্ত প্রশ্ন (All)</option>
+                <option value="mcq">MCQ Type-I</option>
+                <option value="match">Column Matching</option>
+                <option value="assertion">Assertion-Reasoning</option>
+                <option value="tf">True/False</option>
+            </select>
+        </div>
+        <div class="score-board" id="scoreBoard">স্কোর: 0 / 0</div>
+        <button class="btn btn-primary" onclick="resetQuiz()">রিসেট করুন (Reset)</button>
     </div>
+
+    <div id="quizContainer"></div>
 </div>
 
-<footer>
-    © 2026 Apex Chemistry
-</footer>
+<script>
+const quizData = [
+    {
+        id: 1,
+        type: "mcq",
+        question: "1. ভূমিস্তরে H-পরমাণুর ব্যাসার্ধ 0.53Å হলে, $Li^{2+}$ আয়নের দ্বিতীয় বোর কক্ষের ব্যাসার্ধ হবে-[cite: 1]",
+        options: { a: "8.46Å", b: "0.706Å", c: "1.59Å", d: "2.38Å" },
+        answer: "b"
+    },
+    {
+        id: 2,
+        type: "mcq",
+        question: "2. বোরের পারমাণবিক মডেলে একটি ইলেকট্রনের সর্বনিম্ন কৌণিক ভরবেগ হতে পারে-[cite: 1]",
+        options: { a: "0", b: "$\\frac{h}{\\pi}$", c: "$\\frac{h}{2\\pi}$", d: "$\\frac{h}{2\\pi}$" },
+        answer: "d"
+    },
+    {
+        id: 3,
+        type: "mcq",
+        question: "3. $\\lambda$ তরঙ্গদৈর্ঘ্যের একটি ফোটোনের ভরবেগ হল-[cite: 1]",
+        options: { a: "$\\frac{h}{\\lambda}$", b: "0", c: "$\\frac{h\\nu}{c}$", d: "$\\frac{hc}{\\lambda}$" },
+        answer: "a"
+    },
+    {
+        id: 4,
+        type: "mcq",
+        question: "4. বোরের তত্ত্ব অনুযায়ী পঞ্চম কক্ষে ইলেকট্রনের কৌণিক ভরবেগ হয়-[cite: 1]",
+        options: { a: "$25\\frac{h}{\\pi}$", b: "$2.0\\frac{h}{\\pi}$", c: "$10\\frac{h}{\\pi}$", d: "$2.5\\frac{h}{\\pi}$" },
+        answer: "d"
+    },
+    {
+        id: 5,
+        type: "mcq",
+        question: "5. কোনো হাইড্রোজেন সদৃশ পরমাণুর প্রথম বোর কক্ষপথের ব্যাসার্ধ $a_{0}$ হলে তৃতীয় বোর কক্ষপথের ব্যাসার্ধ হবে-[cite: 1]",
+        options: { a: "3 $a_{0}$", b: "6 $a_{0}$", c: "9 $a_{0}$", d: "$\\frac{1}{9}a_{0}$" },
+        answer: "c"
+    },
+    {
+        id: 11,
+        type: "mcq",
+        question: "11. হাইড্রোজেন পরমাণুর ভূমিস্তরে ইলেকট্রনের শক্তি কত?[cite: 1]",
+        options: { a: "1.36 eV", b: "13.6 eV", c: "-13.6 eV", d: "13.6 V" },
+        answer: "c"
+    },
+    {
+        id: 21,
+        type: "mcq",
+        question: "21. রেখা বর্ণালির বৈশিষ্ট্য হল-[cite: 1]",
+        options: { a: "অণুর", b: "পরমাণুর", c: "মূলকের", d: "এদের কোনোটিই নয়" },
+        answer: "b"
+    },
+    {
+        id: 46,
+        type: "mcq",
+        question: "46. s-অরবিট্যালের আকৃতি হল-[cite: 1]",
+        options: { a: "গোলকাকার", b: "ডামবেলাকার", c: "বৃত্তাকার", d: "বর্গাকার" },
+        answer: "a"
+    },
+    {
+        id: 64,
+        type: "match",
+        question: "64. স্তম্ভ-I এর সঙ্গে স্তম্ভ-II মিলিয়ে সঠিক উত্তরটি বাছাই করো:[cite: 1]",
+        table: [
+            ["1. অনিশ্চয়তা নীতি", "A. $_{19}K^{39}$ ও $_{9}F^{19}$"],
+            ["2. দ্বৈত প্রকৃতি", "B. হাইসেনবার্গ"],
+            ["3. আইসোবার", "C. ডি-ব্রগলি"],
+            ["4. আইসোডায়াফার", "D. $_{20}^{40}Ca$ এবং $_{19}^{40}K$"]
+        ],
+        options: {
+            a: "1-B, 2-C, 3-D, 4-A",
+            b: "1-A, 2-D, 3-C, 4-B",
+            c: "1-C, 2-A, 3-B, 4-D",
+            d: "1-D, 2-B, 3-A, 4-C"
+        },
+        answer: "a"
+    },
+    {
+        id: 72,
+        type: "assertion",
+        question: "72. <strong>বিবৃতি (A):</strong> কোনো নির্দিষ্ট মৌলের সমস্ত আইসোটোপগুলির রাসায়নিক ধর্ম একই হয়।<br><strong>ব্যাখ্যা (R):</strong> কোনো পরমাণুর রাসায়নিক ধর্ম নিয়ন্ত্রিত হয় ইলেকট্রনের সংখ্যা দ্বারা।[cite: 1]",
+        options: {
+            a: "A ও R উভয়ই সত্য এবং R, A এর সঠিক ব্যাখ্যা",
+            b: "A ও R উভয়ই সত্য এবং R, A এর সঠিক ব্যাখ্যা নয়",
+            c: "A সঠিক কিন্তু R সঠিক নয়",
+            d: "A এবং R উভয়ই মিথ্যা"
+        },
+        answer: "a"
+    },
+    {
+        id: 74,
+        type: "tf",
+        question: "74. <strong>বিবৃতি A:</strong> কোনো পরমাণুর ইলেকট্রন বিন্যাস পাউলির অপবর্জন নীতি, হুন্ডের নীতি ও আউফবাউ নীতির দ্বারা নিয়ন্ত্রিত হয়।<br><strong>বিবৃতি B:</strong> ইলেকট্রন পূর্ণ হওয়ার সময় প্রথমে নিম্নশক্তি স্তরে ও পরে ক্রমান্বয়ে উচ্চশক্তি স্তরে পূর্ণ হয়।[cite: 1]",
+        options: {
+            a: "A সত্য কিন্তু B মিথ্যা",
+            b: "A মিথ্যা কিন্তু B সত্য",
+            c: "A ও B উভয়ই সত্য",
+            d: "A ও B উভয়ই মিথ্যা"
+        },
+        answer: "c"
+    }
+];
+
+let score = 0;
+let answeredCount = 0;
+const userAnswers = {};
+
+function renderQuiz(filter = "all") {
+    const container = document.getElementById("quizContainer");
+    container.innerHTML = "";
+
+    const filteredData = filter === "all" ? quizData : quizData.filter(q => q.type === filter);
+
+    filteredData.forEach(q => {
+        const card = document.createElement("div");
+        card.className = "question-card";
+        card.id = `q-${q.id}`;
+
+        let content = `<div class="question-title">${q.question}</div>`;
+
+        if (q.table) {
+            content += `<table class="match-table">
+                <thead><tr><th>স্তম্ভ-I</th><th>স্তম্ভ-II</th></tr></thead>
+                <tbody>`;
+            q.table.forEach(row => {
+                content += `<tr><td>${row[0]}</td><td>${row[1]}</td></tr>`;
+            });
+            content += `</tbody></table>`;
+        }
+
+        content += `<div class="options-grid">`;
+        for (const [key, val] of Object.entries(q.options)) {
+            const isSelected = userAnswers[q.id] === key;
+            let btnClass = "option-btn";
+            
+            if (userAnswers[q.id]) {
+                if (key === q.answer) btnClass += " correct";
+                else if (isSelected) btnClass += " incorrect";
+            }
+
+            content += `<button class="${btnClass}" onclick="selectAnswer(${q.id}, '${key}')" ${userAnswers[q.id] ? 'disabled' : ''}>
+                <strong>(${key.toUpperCase()})</strong> ${val}
+            </button>`;
+        }
+        content += `</div>`;
+
+        if (userAnswers[q.id]) {
+            content += `<div class="explanation show">
+                <strong>সঠিক উত্তর: (${q.answer.toUpperCase()})</strong>
+            </div>`;
+        }
+
+        card.innerHTML = content;
+        container.appendChild(card);
+    });
+
+    if (window.MathJax) {
+        MathJax.typesetPromise();
+    }
+    updateScoreBoard();
+}
+
+function selectAnswer(qId, selectedOpt) {
+    if (userAnswers[qId]) return;
+
+    userAnswers[qId] = selectedOpt;
+    const question = quizData.find(q => q.id === qId);
+
+    if (selectedOpt === question.answer) {
+        score++;
+    }
+    answeredCount++;
+
+    renderQuiz(document.getElementById("typeFilter").value);
+}
+
+function updateScoreBoard() {
+    const scoreBoard = document.getElementById("scoreBoard");
+    scoreBoard.textContent = `স্কোর: ${score} / ${quizData.length}`;
+}
+
+function filterQuestions() {
+    const filter = document.getElementById("typeFilter").value;
+    renderQuiz(filter);
+}
+
+function resetQuiz() {
+    for (let key in userAnswers) delete userAnswers[key];
+    score = 0;
+    answeredCount = 0;
+    renderQuiz(document.getElementById("typeFilter").value);
+}
+
+// Initial render
+window.onload = () => {
+    renderQuiz();
+};
+</script>
 
 </body>
 </html>
