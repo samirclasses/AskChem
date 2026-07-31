@@ -2,845 +2,1123 @@
 <html lang="bn">
 <head>
 <meta charset="UTF-8">
-<title>রসায়ন শাস্ত্রের প্রাথমিক ধারণাসমূহ</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>রসায়ন শাস্ত্রের প্রাথমিক ধারণাসমূহ - Interactive Quiz</title>
 <style>
-  @page {
-    size: A4;
-    margin: 20mm;
-    @bottom-center {
-      content: "পৃষ্ঠা " counter(page);
-      font-size: 10pt;
-      font-family: 'Kalpurush', 'Siyam Rupali', Arial, sans-serif;
-    }
+  :root {
+    --primary: #1a365d;
+    --secondary: #2b6cb0;
+    --bg: #f7fafc;
+    --card-bg: #ffffff;
+    --text: #2d3748;
+    --success: #38a169;
+    --error: #e53e3e;
+    --border: #e2e8f0;
   }
+
   body {
-    font-family: 'Kalpurush', 'Siyam Rupali', 'Hind Siliguri', Arial, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, 'Kalpurush', 'Siyam Rupali', sans-serif;
     line-height: 1.6;
-    color: #333;
+    color: var(--text);
+    background-color: var(--bg);
     margin: 0;
-    padding: 0;
+    padding: 20px;
   }
+
+  .container {
+    max-width: 850px;
+    margin: 0 auto;
+    background: var(--card-bg);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  }
+
   h1 {
     text-align: center;
-    color: #1a365d;
-    border-bottom: 2px solid #1a365d;
-    padding-bottom: 8px;
-    margin-bottom: 4px;
-    font-size: 20pt;
+    color: var(--primary);
+    margin-bottom: 5px;
+    font-size: 24pt;
   }
+
   .header-info {
     text-align: center;
     font-weight: bold;
-    margin-bottom: 20px;
-    color: #4a5568;
+    margin-bottom: 30px;
+    color: #718096;
   }
+
   h2 {
-    color: #2b6cb0;
-    border-bottom: 1px solid #e2e8f0;
-    padding-bottom: 4px;
-    margin-top: 24px;
-    font-size: 14pt;
-    page-break-after: avoid;
+    color: var(--secondary);
+    border-bottom: 2px solid var(--border);
+    padding-bottom: 6px;
+    margin-top: 35px;
+    font-size: 16pt;
   }
+
   h3 {
-    color: #2d3748;
-    margin-top: 16px;
-    font-size: 12pt;
-    page-break-after: avoid;
+    color: var(--primary);
+    margin-top: 25px;
+    font-size: 13pt;
   }
-  .question {
-    margin-bottom: 14px;
-    page-break-inside: avoid;
+
+  .question-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 20px;
+    transition: all 0.2s ease;
   }
+
   .q-title {
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: #1a202c;
+  }
+
+  .options-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .option-item {
+    margin-bottom: 8px;
+  }
+
+  .option-item label {
+    display: flex;
+    align-items: center;
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+
+  .option-item label:hover {
+    background-color: #edf2f7;
+  }
+
+  .option-item input[type="radio"] {
+    margin-right: 12px;
+    transform: scale(1.1);
+  }
+
+  /* Quiz Result Styles */
+  .option-item.correct label {
+    background-color: #c6f6d5 !important;
+    border-color: #38a169 !important;
+    color: #22543d;
     font-weight: bold;
-    margin-bottom: 4px;
   }
-  .options {
-    list-style-type: none;
-    padding-left: 15px;
-    margin: 4px 0;
+
+  .option-item.incorrect label {
+    background-color: #fed7d7 !important;
+    border-color: #e53e3e !important;
+    color: #742a2a;
   }
-  .options li {
-    margin-bottom: 2px;
-  }
-  .correct {
-    font-weight: bold;
-    color: #276749;
-  }
+
   table {
     width: 100%;
     border-collapse: collapse;
-    margin: 10px 0;
-    page-break-inside: avoid;
+    margin: 12px 0;
   }
+
   th, td {
-    border: 1px solid #cbd5e0;
-    padding: 6px 10px;
+    border: 1px solid var(--border);
+    padding: 8px 12px;
     text-align: left;
   }
+
   th {
     background-color: #edf2f7;
   }
-  .hints {
-    background-color: #f7fafc;
-    border-left: 4px solid #4299e1;
-    padding: 10px 15px;
-    margin-top: 20px;
+
+  .controls {
+    text-align: center;
+    margin: 30px 0;
   }
-  .formula {
-    font-family: 'Times New Roman', serif;
-    font-style: italic;
+
+  .btn {
+    background-color: var(--secondary);
+    color: white;
+    border: none;
+    padding: 12px 28px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: background 0.2s;
+  }
+
+  .btn:hover {
+    background-color: #2c5282;
+  }
+
+  .score-display {
+    display: none;
+    text-align: center;
+    padding: 15px;
+    background: #ebf8ff;
+    border: 1px solid #3182ce;
+    border-radius: 8px;
+    color: #2b6cb0;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 25px;
+  }
+
+  .answer-key-section {
+    margin-top: 40px;
+    padding: 20px;
+    background: #edf2f7;
+    border-radius: 8px;
+    border-top: 3px solid var(--primary);
+  }
+
+  .answer-key-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 8px;
+    font-family: monospace;
+    font-size: 14px;
+    margin-top: 15px;
+  }
+
+  .key-item {
+    background: #fff;
+    padding: 6px 10px;
+    border-radius: 4px;
+    border: 1px solid #cbd5e0;
+    text-align: center;
+  }
+
+  @media print {
+    .controls, .score-display {
+      display: none !important;
+    }
+    body {
+      background: white;
+      padding: 0;
+    }
+    .container {
+      box-shadow: none;
+      padding: 0;
+    }
+    .question-card {
+      break-inside: avoid;
+    }
   }
 </style>
 </head>
 <body>
 
-<h1>রসায়ন শাস্ত্রের প্রাথমিক ধারণাসমূহ</h1>
-<div class="header-info">(Some Basic Concepts of Chemistry)<br>পূর্ণমান: ১</div>
-
-<h2>MCQ Type-I (সহজ / মৌলিক প্রশ্নাবলি)</h2>
-
-<div class="question">
-  <div class="q-title">1. নীচের কোন্ রাসায়নিক সংযোগ সূত্রটি আয়তন সম্পর্কিত?</div>
-  <ul class="options">
-    <li>a. স্থিরানুপাত সূত্র</li>
-    <li>b. গুণানুপাত সূত্র</li>
-    <li class="correct">c. গে-লুসাকের গ্যাস আয়তন সূত্র</li>
-    <li>d. মিথোনুপাত সূত্র</li>
-  </ul>
-</div>
-
-<div class="question">
-  <div class="q-title">2. কোন্ রাসায়নিক সংযোগ সূত্রকে 'তুল্যাঙ্ক অনুপাত সূত্র' বলা হয়?</div>
-  <ul class="options">
-    <li class="correct">a. মিথোনুপাত সূত্র</li>
-    <li>b. গুণানুপাত সূত্র</li>
-    <li>c. অ্যাভোগাড্রো সূত্র</li>
-    <li>d. ভরের নিত্যতা সূত্র</li>
-  </ul>
-</div>
-
-<div class="question">
-  <div class="q-title">3. নিম্নপ্রদত্ত কোন্ জোড়টি গুণানুপাত সূত্রের উদাহরণ?</div>
-  <ul class="options">
-    <li>a. H<sub>2</sub>O এবং Na<sub>2</sub>O</li>
-    <li>b. Na<sub>2</sub>O এবং BaO</li>
-    <li class="correct">c. PbCl<sub>2</sub> এবং PbCl<sub>4</sub></li>
-    <li>d. MgO এবং Na<sub>2</sub>O</li>
-  </ul>
-</div>
-
-<div class="question">
-  <div class="q-title">4. স্থিরানুপাত সূত্রের বিপরীত বিবৃতিটি সর্বদা সঠিক নয়—তা নীচের কোন্ উদাহরণটি মেনে চলে?</div>
-  <ul class="options">
-    <li>a. C<sub>2</sub>H<sub>2</sub> এবং C<sub>3</sub>H<sub>8</sub></li>
-    <li class="correct">b. C<sub>2</sub>H<sub>2</sub> এবং C<sub>6</sub>H<sub>6</sub></li>
-    <li>c. C<sub>2</sub>H<sub>5</sub>OH এবং CH<sub>3</sub>OH</li>
-    <li>d. CH<sub>3</sub>-O-CH<sub>3</sub> এবং C<sub>2</sub>H<sub>5</sub>-O-C<sub>2</sub>H<sub>5</sub></li>
-  </ul>
-</div>
-
-<div class="question">
-  <div class="q-title">5. H<sub>2</sub>, N<sub>2</sub> এবং কার্বন মনোক্সাইডের (CO) সমভরের একটি মিশ্রণকে একই শর্তে (27°C উষ্ণতায় নির্দিষ্ট আয়তনের পাত্রে) রাখা হলো। এদের আয়তনের অনুপাত কত হবে?</div>
-  <ul class="options">
-    <li class="correct">a. 14 : 1 : 1</li>
-    <li>b. 1 : 1 : 14</li>
-    <li>c. 2 : 14 : 1</li>
-    <li>d. 28 : 1 : 1</li>
-  </ul>
-</div>
-
-<div class="question">
-  <div class="q-title">6. ক্লোরিনের গড় মোলার ভর 35.5 g mol<sup>-1</sup> হলে, প্রকৃতিতে <sup>35</sup>Cl এবং <sup>37</sup>Cl-এর অনুপাত কত?</div>
-  <ul class="options">
-    <li>a. 4 : 1</li>
-    <li class="correct">b. 3 : 1</li>
-    <li>c. 2 : 1</li>
-    <li>d. 1 : 1</li>
-  </ul>
-</div>
-
-<div class="question">
-  <div class="q-title">7. গ্রাম এককে একটি অক্সিজেন পরমাণুর ভর হলো—</div>
-  <ul class="options">
-    <li class="correct">a. 2.656 × 10<sup>-23</sup> g</li>
-    <li>b. 1.567 × 10<sup>-22</sup> g</li>
-    <li>c. 2.0 × 10<sup>-22</sup> g</li>
-    <li>d. 3.5 × 10<sup>-23</sup> g</li>
-  </ul>
-</div>
-
-<div class="question">
-  <div class="q-title">8. STP-তে একটি গ্যাসের ঘনত্ব 1.78 g/L। গ্যাসটির ১ মোলের ভর কত?</div>
-  <ul class="options">
-    <li class="correct">a. 39.9 g</li>
-    <li>b. 22.4 g</li>
-    <li>c. 3.56 g</li>
-    <li>d. 29 g</li>
-  </ul>
-</div>
-
-<div class="question">
-  <div class="q-title">9. 34 g NH<sub>3</sub>-তে উপস্থিত মোট পরমাণুর সংখ্যা হলো—</div>
-  <ul class="options">
-    <li>a. 4 × 10<sup>23</sup></li>
-    <li>b. 18.1 × 10<sup>23</sup></li>
-    <li>c. 2 × 10<sup>23</sup></li>
-    <li class="correct">d. 48 × 10<sup>23</sup></li>
-  </ul>
-</div>
-
-<div class="question">
-  <div class="q-title">10. STP-তে হিলিয়ামের ঘনত্ব 0.1784 g/L হলে, হিলিয়ামের প্রমাণ মোলার আয়তন কত?</div>
-  <ul class="options">
-    <li>a. 11.2 L</li>
-    <li class="correct">b. 22.4 L</li>
-    <li>c. 5.6 L</li>
-    <li>d. 2.8 L</li>
-  </ul>
-</div>
-
-<div class="question">
-  <div class="q-title">11. 88 g CO<sub>2</sub>-তে কত সংখ্যক অক্সিজেন পরমাণু বর্তমান?</div>
-  <ul class="options">
-    <li class="correct">a. 24.09 × 10<sup>23</sup></li>
-    <li>b. 6.023 × 10<sup>23</sup></li>
-    <li>c. 44 × 10<sup>23</sup></li>
-    <li>d. 22 × 10<sup>24</sup></li>
-  </ul>
-</div>
-
-<div class="question">
-  <div class="q-title">12. এক মোল CO<sub>2</sub>-তে কোনটা উপস্থিত?</div>
-  <ul class="options">
-    <li>a. 3 g পরমাণু CO<sub>2</sub></li>
-    <li>b. 18.1 × 10<sup>23</sup> সংখ্যক CO<sub>2</sub> অণু</li>
-    <li>c. 6.02 × 10<sup>23</sup> সংখ্যক O<sub>2</sub> পরমাণু</li>
-    <li class="correct">d. 6.02 × 10<sup>23</sup> সংখ্যক C পরমাণু</li>
-  </ul>
-</div>
-
-<div class="question">
-  <div class="q-title">13. 0.1 মোল একটি ত্রি-পরমাণুক গ্যাসে পরমাণুর সংখ্যা কত? (N<sub>A</sub> = 6.02 × 10<sup>23</sup>)</div>
-  <ul class="options">
-    <li>a. 6.026 × 10<sup>22</sup></li>
-    <li class="correct">b. 1.806 × 10<sup>23</sup></li>
-    <li>c. 3.600 × 10<sup>23</sup></li>
-    <li>d. 1.800 × 10<sup>22</sup></li>
-  </ul>
-</div>
-
-<div class="question">
-  <div class="q-title">14. এক মোল সুক্রোজে (C<sub>12</sub>H<sub>22</sub>O<sub>11</sub>) কত সংখ্যক পরমাণু বর্তমান?</div>
-  <ul class="options">
-    <li>a. 20 × 6.02 × 10<sup>23</sup> atoms/mol</li>
-    <li class="correct">b. 45 × 6.02 × 10<sup>23</sup> atoms/mol</li>
-    <li>c. 5 × 6.02 × 10<sup>23</sup> atoms/mol</li>
-    <li>d. ওপরের কোনোটিই নয়</li>
-  </ul>
-</div>
-
-<div class="question">
-  <div class="q-title">15. STP-তে 1 cc N<sub>2</sub>O-তে উপস্থিত—</div>
-  <ul class="options">
-    <li>a. (1.8 / 224) × 10<sup>22</sup> সংখ্যক পরমাণু</li>
-    <li>b. (6.02 / 22400) × 10<sup>23</sup> সংখ্যক অণু</li>
-    <li>c. (1.32 / 224) × 10<sup>23</sup> টি ইলেকট্রন</li>
-    <li class="correct">d. ওপরের সব কয়টি</li>
-  </ul>
-</div>
-
-<div class="question">
-  <div class="q-title">16. যার মধ্যে সর্বোচ্চ সংখ্যক জলের অণু বর্তমান—</div>
-  <ul class="options">
-    <li>a. 1.8 g জলে</li>
-    <li>b. 18 g জলে</li>
-    <li class="correct">c. 18 মোল জলে</li>
-    <li>d. 18 টি জলের অণুতে</li>
-  </ul>
-</div>
-
-<div class="question">
-  <div class="q-title">17. নিম্নে প্রদত্ত কোনটিতে অণু সংখ্যা সর্বাধিক?</div>
-  <ul class="options">
-    <li>a. 44 g CO<sub>2</sub></li>
-    <li>b. 48 g O<sub>3</sub></li>
-    <li class="correct">c. 8 g H<sub>2</sub></li>
-    <li>d. 64 g SO<sub>2</sub></li>
-  </ul>
-</div>
-
-<div class="question">
-  <div class="q-title">18. প্রমাণ শর্তে এক লিটার বায়ুতে আয়তন হিসেবে 21% অক্সিজেন বর্তমান। এই অক্সিজেনের মোল সংখ্যা হবে—</div>
-  <ul class="options">
-    <li class="correct">a. 0.0093 মোল</li>
-    <li>b. 2.10 মোল</li>
-    <li>c. 0.186 মোল</li>
-    <li>d. 0.21 মোল</li>
-  </ul>
-</div>
-
-<div class="question">
-  <div class="q-title">19. 4.2 g N<sub>3</sub><sup>-</sup> আয়নে মোট যোজ্যতা ইলেকট্রনের সংখ্যা হলো—</div>
-  <ul class="options">
-    <li>a. 2.1 N<sub>A</sub></li>
-    <li>b. 4.2 N<sub>A</sub></li>
-    <li class="correct">c. 1.6 N<sub>A</sub></li>
-    <li>d. 3.2 N<sub>A</sub></li>
-  </ul>
-</div>
-
-<div class="question">
-  <div class="q-title">20. নিম্নলিখিতগুলির মধ্যে কোনটি সবচেয়ে হালকা?</div>
-  <ul class="options">
-    <li>a. 0.2 মোল হাইড্রোজেন গ্যাস</li>
-    <li>b. 6.023 × 10<sup>22</sup> সংখ্যক নাইট্রোজেন অণু</li>
-    <li class="correct">c. 0.1 g সিলভার</li>
-    <li>d. 0.1 মোল অক্সিজেন গ্যাস</li>
-  </ul>
-</div>
-
-<div class="question">
-  <div class="q-title">21. অক্সিজেন ও নাইট্রোজেন গ্যাসের একটি মিশ্রণে গ্যাস দুটির ভরের অনুপাত 1 : 4। তাদের অণু সংখ্যার অনুপাত কত?</div>
-  <ul class="options">
-    <li>a. 3 : 16</li>
-    <li>b. 1 : 4</li>
-    <li class="correct">c. 7 : 32</li>
-    <li>d. 1 : 8</li>
-  </ul>
-</div>
-
-<div class="question">
-  <div class="q-title">22. 558.5 g Fe (পারমাণবিক ভর = 55.85 g mol<sup>-1</sup>)-এর পরমাণু সংখ্যা হলো—</div>
-  <ul class="options">
-    <li class="correct">a. 60 g কার্বনে উপস্থিত পরমাণুর দ্বিগুণ</li>
-    <li>b. 6.023 × 10<sup>22</sup></li>
-    <li>c. 8 g হিলিয়ামে উপস্থিত পরমাণুর অর্ধেক</li>
-    <li>d. 558.5 × 6.023 × 10<sup>23</sup></li>
-  </ul>
-</div>
-
-<div class="question">
-  <div class="q-title">23. 0.018 g জলে জল-অণুর সংখ্যা হলো—</div>
-  <ul class="options">
-    <li>a. 6.023 × 10<sup>23</sup></li>
-    <li class="correct">b. 6.023 × 10<sup>20</sup></li>
-    <li>c. 6.023 × 10<sup>21</sup></li>
-    <li>d. 1 × 6.023 × 10<sup>22</sup></li>
-  </ul>
-</div>
-
-<div class="question">
-  <div class="q-title">24. কোনটিতে 0.5 গ্রাম-পরমাণু মৌল আছে?</div>
-  <ul class="options">
-    <li>a. 40 g N<sub>2</sub></li>
-    <li>b. 40 g O<sub>2</sub></li>
-    <li class="correct">c. 20 g Ca</li>
-    <li>d. 20 g C</li>
-  </ul>
-</div>
-
-<div class="question">
-  <div class="q-title">25. মিথেনের মোলের ভিত্তিতে কার্বনের শতকরা পরিমাণ হলো—</div>
-  <ul class="options">
-    <li>a. 80%</li>
-    <li>b. 25%</li>
-    <li>c. 75%</li>
-    <li class="correct">d. 20%</li>
-  </ul>
-</div>
-
-<div class="question">
-  <div class="q-title">26. একটি মৌলের তুল্যাঙ্কভার 4। এটির ক্লোরাইডের বাষ্প ঘনত্ব 59.23 হলে, মৌলটির যোজ্যতা কত হবে?</div>
-  <ul class="options">
-    <li>a. 4</li>
-    <li class="correct">b. 3</li>
-    <li>c. 2</li>
-    <li>d. 1</li>
-  </ul>
-</div>
-
-<div class="question">
-  <div class="q-title">27. অ্যাসিড মাধ্যমে KMnO<sub>4</sub>-এর তুল্যাঙ্কভার কত? (K=39, Mn=55)</div>
-  <ul class="options">
-    <li>a. 158</li>
-    <li class="correct">b. 31.6</li>
-    <li>c. 15.8</li>
-    <li>d. 112</li>
-  </ul>
-</div>
-
-<div class="question">
-  <div class="q-title">28. দুটি মৌল পরস্পরের সঙ্গে যুক্ত হয়—</div>
-  <ul class="options">
-    <li>a. পারমাণবিক গুরুত্বের অনুপাতে</li>
-    <li>b. আণবিক গুরুত্বের অনুপাতে</li>
-    <li>c. গ্রাম-অণুর অনুপাতে</li>
-    <li class="correct">d. তুল্যাঙ্কভারের অনুপাতে</li>
-  </ul>
-</div>
-
-<div class="question">
-  <div class="q-title">29. Fe<sub>2</sub>O<sub>3</sub> যৌগে আয়রনের তুল্যাঙ্কভার কত?</div>
-  <ul class="options">
-    <li>a. 18.6</li>
-    <li>b. 28</li>
-    <li>c. 56</li>
-    <li class="correct">d. 18.67 (বা নিকটস্থ মান)</li>
-  </ul>
-</div>
-
-<div class="question">
-  <div class="q-title">30. একটি যৌগ প্রস্তুতিতে A মৌলের 10 g-এর সঙ্গে B মৌলের 15 g বিক্রিয়া করে। যদি A-এর তুল্যাঙ্কভার 20 হয়, তবে B-এর তুল্যাঙ্কভার কত?</div>
-  <ul class="options">
-    <li class="correct">a. 30</li>
-    <li>b. 60</li>
-    <li>c. 45</li>
-    <li>d. কোনোটিই নয়</li>
-  </ul>
-</div>
-
-<div class="question">
-  <div class="q-title">31. কোনো ধাতব অক্সাইড M<sub>m</sub>O<sub>n</sub>-এ M-এর তুল্যাঙ্কভার x হলে, ধাতুটির পারমাণবিক ভর কত?</div>
-  <ul class="options">
-    <li class="correct">a. (2nx) / m</li>
-    <li>b. (2mx) / n</li>
-    <li>c. (2mn) / x</li>
-    <li>d. কোনোটিই নয়</li>
-  </ul>
-</div>
-
-<div class="question">
-  <div class="q-title">32. 0.5 g কোনো ধাতু থেকে 0.79 g ধাতব অক্সাইড পাওয়া গেলে ধাতুটির তুল্যাঙ্কভার কত?</div>
-  <ul class="options">
-    <li>a. 10</li>
-    <li class="correct">b. 13.8</li>
-    <li>c. 20</li>
-    <li>d. 40</li>
-  </ul>
-</div>
-
-<div class="question">
-  <div class="q-title">33. একটি ধাতব ক্লোরাইডের 74.5 g-এ 35.5 g ক্লোরিন থাকলে ধাতুটির তুল্যাঙ্কভার হবে—</div>
-  <ul class="options">
-    <li>a. 19.5</li>
-    <li>b. 35.5</li>
-    <li class="correct">c. 39.0</li>
-    <li>d. 78.0</li>
-  </ul>
-</div>
-
-<div class="question">
-  <div class="q-title">34. একটি যৌগের স্থূল সংকেত CH<sub>2</sub>O<sub>2</sub> এবং আণবিক ভর 92। যৌগটির আণবিক সংকেত কী?</div>
-  <ul class="options">
-    <li>a. C<sub>2</sub>H<sub>2</sub>O<sub>2</sub></li>
-    <li>b. C<sub>2</sub>H<sub>2</sub>O<sub>4</sub></li>
-    <li class="correct">c. C<sub>2</sub>H<sub>4</sub>O<sub>4</sub></li>
-    <li>d. CH<sub>4</sub>O<sub>4</sub></li>
-  </ul>
-</div>
-
-<div class="question">
-  <div class="q-title">35. একটি জৈব যৌগের বিশ্লেষণে পাওয়া যায় C = 54.2%, H = 9.2% (ভরের ভিত্তিতে)। এর স্থূল সংকেত হবে—</div>
-  <ul class="options">
-    <li>a. CHO<sub>2</sub></li>
-    <li>b. CH<sub>2</sub>O</li>
-    <li>c. C<sub>2</sub>H<sub>8</sub>O</li>
-    <li class="correct">d. C<sub>2</sub>H<sub>4</sub>O</li>
-  </ul>
-</div>
-
-<div class="question">
-  <div class="q-title">36. একটি যৌগের স্থূল সংকেত CH<sub>2</sub> এবং এক মোল যৌগের ভর 42 g। এর আণবিক সংকেত হলো—</div>
-  <ul class="options">
-    <li class="correct">a. C<sub>3</sub>H<sub>6</sub></li>
-    <li>b. C<sub>3</sub>H<sub>8</sub></li>
-    <li>c. CH<sub>2</sub></li>
-    <li>d. C<sub>2</sub>H<sub>2</sub></li>
-  </ul>
-</div>
-
-<div class="question">
-  <div class="q-title">37. একটি যৌগে C, H এবং N-এর ভরের অনুপাত 9 : 1 : 3.5। যৌগটির আণবিক ভর 108 হলে, আণবিক সংকেত হবে—</div>
-  <ul class="options">
-    <li>a. C<sub>2</sub>H<sub>6</sub>N<sub>2</sub></li>
-    <li>b. C<sub>3</sub>H<sub>4</sub>N</li>
-    <li class="correct">c. C<sub>6</sub>H<sub>8</sub>N<sub>2</sub></li>
-    <li>d. C<sub>9</sub>H<sub>12</sub>N<sub>3</sub></li>
-  </ul>
-</div>
-
-<div class="question">
-  <div class="q-title">38. যদি 40 g CaCO<sub>3</sub>-এর সঙ্গে 40 g HCl বিক্রিয়া করে, তবে কোন্ বিক্রিয়কটি লিমিটিং বিকারক (Limiting reagent) হবে?</div>
-  <ul class="options">
-    <li class="correct">a. CaCO<sub>3</sub></li>
-    <li>b. HCl</li>
-    <li>c. a এবং b উভয়ই</li>
-    <li>d. কোনোটিই নয়</li>
-  </ul>
-</div>
-
-<div class="question">
-  <div class="q-title">39. একটি যৌগের মধ্যে 38.8% কার্বন, 16.0% হাইড্রোজেন এবং 45.2% নাইট্রোজেন থাকলে যৌগটির সংকেত হলো—</div>
-  <ul class="options">
-    <li class="correct">a. CH<sub>3</sub>NH<sub>2</sub></li>
-    <li>b. CH<sub>3</sub>CN</li>
-    <li>c. C<sub>2</sub>H<sub>5</sub>CN</li>
-    <li>d. CH<sub>2</sub>(NH)<sub>2</sub></li>
-  </ul>
-</div>
-
-<div class="question">
-  <div class="q-title">40. একটি 60 g যৌগে 24 g কার্বন, 4 g হাইড্রোজেন এবং 32 g অক্সিজেন উপস্থিত। যৌগটির স্থূল সংকেত হলো—</div>
-  <ul class="options">
-    <li>a. C<sub>2</sub>H<sub>2</sub>O<sub>2</sub></li>
-    <li>b. HCHO</li>
-    <li>c. CH<sub>2</sub>O<sub>2</sub></li>
-    <li class="correct">d. CH<sub>2</sub>O</li>
-  </ul>
-</div>
-
-<div class="question">
-  <div class="q-title">41. STP-তে 2.80 L হাইড্রোজেনের সঙ্গে কত পরিমাণ কপার অক্সাইড বিক্রিয়া করবে?</div>
-  <ul class="options">
-    <li>a. 79.5 g</li>
-    <li>b. 2 g</li>
-    <li class="correct">c. 9.9 g</li>
-    <li>d. 22.4 g</li>
-  </ul>
-</div>
-
-<div class="question">
-  <div class="q-title">42. 2.8 kg ইথিলিনের সম্পূর্ণ দহনের জন্য প্রয়োজনীয় অক্সিজেনের ভর কত?</div>
-  <ul class="options">
-    <li>a. 2.8 kg</li>
-    <li>b. 6.4 kg</li>
-    <li class="correct">c. 9.6 kg</li>
-    <li>d. 0.96 kg</li>
-  </ul>
-</div>
-
-<div class="question">
-  <div class="q-title">43. 4NH<sub>3</sub>(g) + 5O<sub>2</sub>(g) → 4NO(g) + 6H<sub>2</sub>O(l) বিক্রিয়াটিতে যখন 1 মোল অ্যামোনিয়া এবং 1 মোল O<sub>2</sub> সম্পূর্ণ বিক্রিয়া করে, তখন—</div>
-  <ul class="options">
-    <li>a. 1.0 মোল H<sub>2</sub>O উৎপন্ন হয়</li>
-    <li>b. 1.0 মোল NO উৎপন্ন হবে</li>
-    <li class="correct">c. সমস্ত O<sub>2</sub> বিক্রিয়া করবে</li>
-    <li>d. সমস্ত NH<sub>3</sub> বিক্রিয়া করবে</li>
-  </ul>
-</div>
-
-<div class="question">
-  <div class="q-title">44. হেবার পদ্ধতিতে 20 মোল অ্যামোনিয়া প্রস্তুত করতে কত মোল হাইড্রোজেন দরকার?</div>
-  <ul class="options">
-    <li>a. 40</li>
-    <li>b. 10</li>
-    <li>c. 20</li>
-    <li class="correct">d. 30</li>
-  </ul>
-</div>
-
-<div class="question">
-  <div class="q-title">45. কত পরিমাণ CaCO<sub>3</sub>-কে উত্তপ্ত করলে উৎপন্ন CO<sub>2</sub> গ্যাস 0.2 মোল Na<sub>2</sub>CO<sub>3</sub>-কে NaHCO<sub>3</sub>-এ রূপান্তরিত করবে?</div>
-  <ul class="options">
-    <li>a. 40 g</li>
-    <li class="correct">b. 20 g</li>
-    <li>c. 30 g</li>
-    <li>d. 49 g</li>
-  </ul>
-</div>
-
-<div class="question">
-  <div class="q-title">46. STP-তে কত আয়তনের H<sub>2</sub> গ্যাস পাওয়া যাবে যখন 1.45 g धातুর (তুল্যাঙ্কভার = 9) সঙ্গে লঘু H<sub>2</sub>SO<sub>4</sub>-এর বিক্রিয়া করানো হবে?</div>
-  <ul class="options">
-    <li class="correct">a. 1.8044 L</li>
-    <li>b. 1.8404 cc</li>
-    <li>c. 200 cc</li>
-    <li>d. কোনোটিই নয়</li>
-  </ul>
-</div>
-
-<div class="question">
-  <div class="q-title">47. 30 g জলে 2.82 g গ্লুকোজ দ্রবীভূত করা হলো। দ্রবণে গ্লুকোজের মোল ভগ্নাংশ কত হবে?</div>
-  <ul class="options">
-    <li class="correct">a. 0.01</li>
-    <li>b. 0.99</li>
-    <li>c. 0.52</li>
-    <li>d. 1.66</li>
-  </ul>
-</div>
-
-<div class="question">
-  <div class="q-title">48. দ্রবণের কোন্ গাড়ত্ব প্রকাশের পদ্ধতিটি উষ্ণতার সঙ্গে পরিবর্তিত হয় না?</div>
-  <ul class="options">
-    <li>a. মোলারিটি</li>
-    <li>b. নরম্যালিটি</li>
-    <li class="correct">c. মোলালিটি</li>
-    <li>d. সব কয়টি</li>
-  </ul>
-</div>
-
-<div class="question">
-  <div class="q-title">49. 0.2 (N) Na<sub>2</sub>CO<sub>3</sub> দ্রবণের মোলারিটি কত?</div>
-  <ul class="options">
-    <li class="correct">a. 0.1 (M)</li>
-    <li>b. 0 (M)</li>
-    <li>c. 0.4 (M)</li>
-    <li>d. 0.2 (M)</li>
-  </ul>
-</div>
-
-<div class="question">
-  <div class="q-title">50. 10 mL 2(M) NaOH দ্রবণের সঙ্গে 200 mL 0.5(M) NaOH দ্রবণ যোগ করলে অন্তিম গাড়ত্ব কত হবে?</div>
-  <ul class="options">
-    <li class="correct">a. 0.57 (M)</li>
-    <li>b. 5.7 (M)</li>
-    <li>c. 11.4 (M)</li>
-    <li>d. 1.14 (M)</li>
-  </ul>
-</div>
-
-<div class="question">
-  <div class="q-title">51. 100 mL দ্রবণে 6.02 × 10<sup>20</sup> সংখ্যক ইউরিয়া অণু বর্তমান। দ্রবণের গাড়ত্ব কত?</div>
-  <ul class="options">
-    <li>a. 0.001 (M)</li>
-    <li>b. 0.1 (M)</li>
-    <li>c. 0.02 (M)</li>
-    <li class="correct">d. 0.01 (M)</li>
-  </ul>
-</div>
-
-<div class="question">
-  <div class="q-title">52. যদি দ্রবণের ঘনত্ব 1.17 g/cc হয় (HCl দ্রবণের ক্ষেত্রে), তবে দ্রবণের মোলারিটি কত হবে?</div>
-  <ul class="options">
-    <li>a. 36.5</li>
-    <li>b. 18.25</li>
-    <li class="correct">c. 32.05</li>
-    <li>d. 42.10</li>
-  </ul>
-</div>
-
-<div class="question">
-  <div class="q-title">53. 2 L আয়তনের 0.1(M) চিনির (C<sub>12</sub>H<sub>22</sub>O<sub>11</sub>) দ্রবণ প্রস্তুতিতে প্রয়োজনীয় চিনির পরিমাণ কত?</div>
-  <ul class="options">
-    <li>a. 136.8 g</li>
-    <li>b. 34.2 g</li>
-    <li class="correct">c. 68.4 g</li>
-    <li>d. 17.1 g</li>
-  </ul>
-</div>
-
-<div class="question">
-  <div class="q-title">54. 0.3(M) ফসফরাস অ্যাসিড (H<sub>3</sub>PO<sub>3</sub>)-এর নরম্যাল মাত্রা কত?</div>
-  <ul class="options">
-    <li>a. 0.1</li>
-    <li>b. 0.9</li>
-    <li>c. 0.3</li>
-    <li class="correct">d. 0.6</li>
-  </ul>
-</div>
-
-<div class="question">
-  <div class="q-title">55. উষ্ণতা বৃদ্ধিতে নীচের যেটির পরিবর্তন হয়—</div>
-  <ul class="options">
-    <li>a. মোলালিটি</li>
-    <li>b. দ্রাবের ভরের ভগ্নাংশ</li>
-    <li class="correct">c. মোলারিটি</li>
-    <li>d. মোল ভগ্নাংশ</li>
-  </ul>
-</div>
-
-<div class="question">
-  <div class="q-title">56. 500 mL দ্রবণে 5.85 g NaCl বর্তমান। দ্রবণের মোলারিটি হবে—</div>
-  <ul class="options">
-    <li>a. 4 mol L<sup>-1</sup></li>
-    <li>b. 20 mol L<sup>-1</sup></li>
-    <li class="correct">c. 0.2 mol L<sup>-1</sup></li>
-    <li>d. 2 mol L<sup>-1</sup></li>
-  </ul>
-</div>
-
-<h2>MCQ Type-II (বিশেষ ধরন)</h2>
-
-<h3>শূন্যস্থান পূরণ (Fill in the blanks)</h3>
-
-<div class="question">
-  <div class="q-title">57. আইসোমারগুলির ক্ষেত্রে ____________ সূত্রের বিপরীত বক্তব্য সত্য হয় না।</div>
-  <ul class="options">
-    <li class="correct">a. স্থিরানুপাত</li>
-    <li>b. গুণানুপাত</li>
-    <li>c. মিথোনুপাত</li>
-    <li>d. গে-লুসাক</li>
-  </ul>
-</div>
-
-<div class="question">
-  <div class="q-title">58. অ্যাভোগাড্রো প্রকল্প শুধুমাত্র ____________ পদার্থের ক্ষেত্রে প্রযোজ্য।</div>
-  <ul class="options">
-    <li>a. তরল</li>
-    <li>b. কঠিন</li>
-    <li class="correct">c. গ্যাসীয়</li>
-    <li>d. কোনোটিই নয়</li>
-  </ul>
-</div>
-
-<div class="question">
-  <div class="q-title">59. CuO যৌগে Cu-এর তুল্যাঙ্কভার হলো—</div>
-  <ul class="options">
-    <li>a. 63.5</li>
-    <li>b. 6.35</li>
-    <li>c. 3.175</li>
-    <li class="correct">d. 31.75</li>
-  </ul>
-</div>
-
-<div class="question">
-  <div class="q-title">60. দ্রবণের ____________ গাড়ত্ব উষ্ণতার উপর নির্ভর করে না।</div>
-  <ul class="options">
-    <li>a. মোলার</li>
-    <li class="correct">b. মোলাল</li>
-    <li>c. নরম্যাল</li>
-    <li>d. ফর্ম্যাল</li>
-  </ul>
-</div>
-
-<h3>স্তম্ভ মেলানো (Column Matching)</h3>
-
-<div class="question">
-  <div class="q-title">61. স্তম্ভ-I এর সাথে স্তম্ভ-II মেলাও:</div>
-  <table>
-    <tr><th>স্তম্ভ-I</th><th>স্তম্ভ-II</th></tr>
-    <tr><td>1. স্থিরানুপাত সূত্র</td><td>C. উপাদান মৌলগুলির ভরের অনুপাত স্থির থাকে</td></tr>
-    <tr><td>2. গে-লুসাকের গ্যাস আয়তন সূত্র</td><td>D. বিক্রিয়ক ও বিক্রিয়াজাত পদার্থের অণুগুলি সরল অনুপাতে থাকে</td></tr>
-    <tr><td>3. গুণানুপাত সূত্র</td><td>A. ভরগুলির মধ্যে একটি সরল অনুপাত বর্তমান</td></tr>
-    <tr><td>4. মিথোনুপাত সূত্র</td><td>B. ভরগুলির সরল অনুপাত বা উপগুণিতকের অনুপাতে যুক্ত হয়</td></tr>
-  </table>
-  <p class="correct">সঠিক উত্তর: b. 1-C, 2-D, 3-A, 4-B</p>
-</div>
-
-<div class="question">
-  <div class="q-title">62. স্তম্ভ-I এর সাথে স্তম্ভ-II মেলাও:</div>
-  <table>
-    <tr><th>স্তম্ভ-I</th><th>স্তম্ভ-II</th></tr>
-    <tr><td>1. 1 মিলিমোল CO<sub>2</sub>-এর ভর</td><td>D. 0.044 g</td></tr>
-    <tr><td>2. 1 মিলিমোল SO<sub>2</sub>-তে অণুর সংখ্যা</td><td>A. 6.022 × 10<sup>20</sup> টি</td></tr>
-    <tr><td>3. 3.6 g NH<sub>4</sub><sup>+</sup>-তে ইলেকট্রন সংখ্যা</td><td>B. 1.2044 × 10<sup>24</sup> টি</td></tr>
-    <tr><td>4. 1 মিলিমোল মিথেনে ইলেকট্রন সংখ্যা</td><td>C. 6.022 × 10<sup>21</sup> টি</td></tr>
-  </table>
-  <p class="correct">সঠিক উত্তর: a. 1-D, 2-A, 3-B, 4-C</p>
-</div>
-
-<div class="question">
-  <div class="q-title">63. স্তম্ভ-I এর সাথে স্তম্ভ-II মেলাও:</div>
-  <table>
-    <tr><th>স্তম্ভ-I</th><th>স্তম্ভ-II</th></tr>
-    <tr><td>1. Al<sub>2</sub>(SO<sub>4</sub>)<sub>3</sub>-এর তুল্যাঙ্কভার</td><td>D. 57</td></tr>
-    <tr><td>2. SO<sub>4</sub><sup>2-</sup> মূলকের তুল্যাঙ্কভার</td><td>A. 48</td></tr>
-    <tr><td>3. প্রশম মাধ্যমে KMnO<sub>4</sub>-এর তুল্যাঙ্কভার</td><td>B. 52.7</td></tr>
-    <tr><td>4. অক্সালিক অ্যাসিডের তুল্যাঙ্কভার</td><td>C. 63</td></tr>
-  </table>
-  <p class="correct">সঠিক উত্তর: d. 1-D, 2-A, 3-B, 4-C</p>
-</div>
-
-<div class="question">
-  <div class="q-title">64. স্তম্ভ-I এর সাথে স্তম্ভ-II মেলাও:</div>
-  <table>
-    <tr><th>স্তম্ভ-I</th><th>স্তম্ভ-II</th></tr>
-    <tr><td>1. প্রতি লিটার দ্রবণে 1 g তুল্যাঙ্ক দ্রাব</td><td>B. 1(N) দ্রবণ</td></tr>
-    <tr><td>2. প্রতি লিটার দ্রবণে দ্রাব অণুর মোল সংখ্যা</td><td>C. মোলারিটি</td></tr>
-    <tr><td>3. 1 গ্রাম-পরমাণু সালফার</td><td>D. 32 g</td></tr>
-    <tr><td>4. STP-তে 22.4 L CO<sub>2</sub> গ্যাস</td><td>A. 1 × 6.02 × 10<sup>23</sup> টি অণু</td></tr>
-  </table>
-  <p class="correct">সঠিক উত্তর: a. 1-B, 2-C, 3-D, 4-A</p>
-</div>
-
-<h3>ক্রমানুসারে সাজানো (Rearrangement)</h3>
-
-<div class="question">
-  <div class="q-title">65. ডুলং ও পেটিটের সূত্র দ্বারা সঠিক পারমাণবিক ওজন নির্ণয়ের ক্রম হলো—</div>
-  <ul class="options">
-    <li class="correct">a. পারমাণবিক তাপ → আনুমানিক পারমাণবিক ওজন → যোজ্যতা → সঠিক পারমাণবিক ওজন</li>
-    <li>b. আনুমানিক পারমাণবিক ওজন → পারমাণবিক তাপ → যোজ্যতা → সঠিক পারমাণবিক ওজন</li>
-    <li>c. সঠিক পারমাণবিক ওজন → পারমাণবিক তাপ → আনুমানিক পারমাণবিক ওজন → যোজ্যতা</li>
-    <li>d. যোজ্যতা → সঠিক পারমাণবিক ওজন → আনুমানিক পারমাণবিক ওজন → পারমাণবিক তাপ</li>
-  </ul>
-</div>
-
-<div class="question">
-  <div class="q-title">66. আণবিক সংকেত নির্ণয় করার সঠিক ক্রমটি হলো—</div>
-  <ul class="options">
-    <li>a. স্থূলসংকেত → বাষ্পঘনত্ব → গ্যাসের আয়তন সংযুতি → আণবিক সংকেত</li>
-    <li>b. বাষ্পঘনত্ব → স্থূলসংকেত → গ্যাসের আয়তন সংযুতি → আণবিক সংকেত</li>
-    <li>c. স্থূলসংকেত → গ্যাসের আয়তন সংযুতি → বাষ্পঘনত্ব → আণবিক সংকেত</li>
-    <li class="correct">d. গ্যাসের আয়তন সংযুতি → স্থূলসংকেত → বাষ্পঘনত্ব → আণবিক সংকেত</li>
-  </ul>
-</div>
-
-<div class="question">
-  <div class="q-title">67. আণবিক সংকেত নির্ণয় করার সঠিক ধাপের ক্রম হলো—</div>
-  <ul class="options">
-    <li class="correct">a. বিভিন্ন মৌলগুলির ভরের শতকরা নির্ণয় → বিভিন্ন মৌলগুলির পরমাণু সংখ্যার অনুপাত নির্ণয় → মৌলগুলির পরমাণুর লঘিষ্ঠতম পূর্ণসংখ্যার অনুপাত নির্ণয় → উপযুক্ত পূর্ণসংখ্যা দিয়ে গুণ করে আণবিক সংকেত পাওয়া যায়</li>
-  </ul>
-</div>
-
-<h3>বিবৃতি ও ব্যাখ্যাধর্মী প্রশ্ন (Assertion-Reasoning)</h3>
-<p><strong>নির্দেশাবলী:</strong><br>
-a. A ও R দুটিই সত্য এবং R হলো A-এর সঠিক ব্যাখ্যা।<br>
-b. A ও R দুটিই সত্য কিন্তু R, A-এর সঠিক ব্যাখ্যা নয়।<br>
-c. A সঠিক কিন্তু R সঠিক নয়।<br>
-d. A সঠিক নয় কিন্তু R সঠিক।</p>
-
-<div class="question">
-  <div class="q-title">68. বিবৃতি (A): উষ্ণতা বৃদ্ধি বা হ্রাসে দ্রবণের মোলালিটির কোনো পরিবর্তন হয় না।<br>
-  ব্যাখ্যা (R): মোলালিটি উষ্ণতা নিরপেক্ষ।</div>
-  <p class="correct">উত্তর: a. A ও R দুটিই সত্য এবং R হলো A-এর সঠিক ব্যাখ্যা</p>
-</div>
-
-<div class="question">
-  <div class="q-title">69. বিবৃতি (A): মৌলের তুল্যাঙ্কভার কখনোই শূন্য হয় না।<br>
-  ব্যাখ্যা (R): কোনো মৌলের পারমাণবিক ভর শূন্য হয়।</div>
-  <p class="correct">উত্তর: c. A সঠিক কিন্তু R সঠিক নয়</p>
-</div>
-
-<h3>সত্য/মিথ্যা ধর্মী প্রশ্ন (True and False Type)</h3>
-
-<div class="question">
-  <div class="q-title">70. বিবৃতি A: x g একটি মৌল থেকে y g ক্লোরাইড পাওয়া যায়। মৌলটির তুল্যাঙ্কভার = (35.5x) / (y - x)<br>
-  বিবৃতি B: একটি ত্রিযোজী धातুর তুল্যাঙ্কভার 32.70 হলে ধাতুর ক্লোরাইডের আণবিক গুরুত্ব হবে 204.60।</div>
-  <p class="correct">উত্তর: c. A ও B উভয়ই সত্য</p>
-</div>
-
-<div class="question">
-  <div class="q-title">71. বিবৃতি A: 1 amu = 1.6605 × 10<sup>-27</sup> kg<br>
-  বিবৃতি B: 1 মোল = 1.023 × 10<sup>23</sup> টি অণু<br>
-  বিবৃতি C: 0.1 g ভরের জলের ফোঁটায় অণুর সংখ্যা 3.35 × 10<sup>21</sup> টি<br>
-  বিবৃতি D: 1.8228 × 10<sup>6</sup> মোল ইলেকট্রনের ভর 1 kg হবে</div>
-  <p class="correct">উত্তর: c. A, C, D সত্য কিন্তু B মিথ্যা</p>
-</div>
-
-<div class="hints">
-  <h2>🔑 সংকেত ও সমাধান (Hints & Solutions)</h2>
-  <ul>
-    <li><strong>প্রশ্ন ৪:</strong> C<sub>2</sub>H<sub>2</sub>-এর C : H = 24 : 2 = 12 : 1; এবং C<sub>6</sub>H<sub>6</sub>-এর C : H = 72 : 6 = 12 : 1। উভয় ক্ষেত্রে অনুপাত সমান হওয়া সত্ত্বেও যৌগ দুটি আলাদা।</li>
-    <li><strong>প্রশ্ন ৫:</strong> নির্দিষ্ট উষ্ণতা ও চাপে আয়তন মোল সংখ্যার সমানুপাতিক।<br>
-    আয়তন অনুপাত = মোল অনুপাত = (1/2) : (1/28) : (1/28) = 14 : 1 : 1</li>
-    <li><strong>প্রশ্ন ৬:</strong> ধরি <sup>35</sup>Cl-এর শতকরা পরিমাণ x%।<br>
-    [(35 × x) + 37(100 - x)] / 100 = 35.5 ⇒ x = 75%<br>
-    ∴ <sup>35</sup>Cl : <sup>37</sup>Cl = 75 : 25 = 3 : 1</li>
-    <li><strong>প্রশ্ন ৭:</strong> একটি O পরমাণুর ভর = 16 × 1.66 × 10<sup>-24</sup> g = 2.656 × 10<sup>-23</sup> g।</li>
-    <li><strong>প্রশ্ন ৮:</strong> ১ মোলের ভর = 22.4 × 1.78 = 39.872 g ≈ 39.9 g।</li>
-    <li><strong>প্রশ্ন ৯:</strong> 34 g NH<sub>3</sub> = 2 মোল NH<sub>3</sub> অণু।<br>
-    মোট পরমাণু = 2 × 4 × 6.022 × 10<sup>23</sup> = 48 × 10<sup>23</sup></li>
-    <li><strong>প্রশ্ন ১০:</strong> He-এর আণবিক ভর = 4 g।<br>
-    প্রমাণ মোলার আয়তন = 4 / 0.1784 L ≈ 22.4 L</li>
-    <li><strong>প্রশ্ন ১৯:</strong> 4.2 g N<sub>3</sub><sup>-</sup> = 4.2 / 42 = 0.1 মোল।<br>
-    যোজক ইলেকট্রন = 0.1 × N<sub>A</sub> × 16 = 1.6 N<sub>A</sub></li>
-    <li><strong>প্রশ্ন ৩০:</strong> (A-এর ভর / A-এর তুল্যাঙ্কভার) = (B-এর ভর / B-এর তুল্যাঙ্কভার)<br>
-    ⇒ 10 / 20 = 15 / (B-এর তুল্যাঙ্কভার) ⇒ B-এর তুল্যাঙ্কভার = 30</li>
-    <li><strong>প্রশ্ন ৪৮ ও ৬৮:</strong> মোলালিটি নির্ভর করে দ্রাবের মোল সংখ্যা ও দ্রাবকের ভরের ওপর, যা উষ্ণতা নিরপেক্ষ।</li>
-  </ul>
-</div>
+<div class="container">
+  <h1>রসায়ন শাস্ত্রের প্রাথমিক ধারণাসমূহ</h1>
+  <div class="header-info">(Some Basic Concepts of Chemistry)<br>Interactive Quiz</div>
+
+  <div id="scoreDisplay" class="score-display"></div>
+
+  <form id="quizForm">
+    <h2>MCQ Type-I (সহজ / মৌলিক প্রশ্নাবলি)</h2>
+
+    <div class="question-card" id="q1">
+      <div class="q-title">1. নীচের কোন্ রাসায়নিক সংযোগ সূত্রটি আয়তন সম্পর্কিত?</div>
+      <ul class="options-list">
+        <li class="option-item"><label><input type="radio" name="q1" value="a"> a. স্থিরানুপাত সূত্র</label></li>
+        <li class="option-item"><label><input type="radio" name="q1" value="b"> b. গুণানুপাত সূত্র</label></li>
+        <li class="option-item"><label><input type="radio" name="q1" value="c"> c. গে-লুসাকের গ্যাস আয়তন সূত্র</label></li>
+        <li class="option-item"><label><input type="radio" name="q1" value="d"> d. মিথোনুপাত সূত্র</label></li>
+      </ul>
+    </div>
+
+    <div class="question-card" id="q2">
+      <div class="q-title">2. কোন্ রাসায়নিক সংযোগ সূত্রকে 'তুল্যাঙ্ক অনুপাত সূত্র' বলা হয়?</div>
+      <ul class="options-list">
+        <li class="option-item"><label><input type="radio" name="q2" value="a"> a. মিথোনুপাত সূত্র</label></li>
+        <li class="option-item"><label><input type="radio" name="q2" value="b"> b. গুণানুপাত সূত্র</label></li>
+        <li class="option-item"><label><input type="radio" name="q2" value="c"> c. অ্যাভোগাড্রো সূত্র</label></li>
+        <li class="option-item"><label><input type="radio" name="q2" value="d"> d. ভরের নিত্যতা সূত্র</label></li>
+      </ul>
+    </div>
+
+    <div class="question-card" id="q3">
+      <div class="q-title">3. নিম্নপ্রদত্ত কোন্ জোড়টি গুণানুপাত সূত্রের উদাহরণ?</div>
+      <ul class="options-list">
+        <li class="option-item"><label><input type="radio" name="q3" value="a"> a. H<sub>2</sub>O এবং Na<sub>2</sub>O</label></li>
+        <li class="option-item"><label><input type="radio" name="q3" value="b"> b. Na<sub>2</sub>O এবং BaO</label></li>
+        <li class="option-item"><label><input type="radio" name="q3" value="c"> c. PbCl<sub>2</sub> এবং PbCl<sub>4</sub></label></li>
+        <li class="option-item"><label><input type="radio" name="q3" value="d"> d. MgO এবং Na<sub>2</sub>O</label></li>
+      </ul>
+    </div>
+
+    <div class="question-card" id="q4">
+      <div class="q-title">4. স্থিরানুপাত সূত্রের বিপরীত বিবৃতিটি সর্বদা সঠিক নয়—তা নীচের কোন্ উদাহরণটি মেনে চলে?</div>
+      <ul class="options-list">
+        <li class="option-item"><label><input type="radio" name="q4" value="a"> a. C<sub>2</sub>H<sub>2</sub> এবং C<sub>3</sub>H<sub>8</sub></label></li>
+        <li class="option-item"><label><input type="radio" name="q4" value="b"> b. C<sub>2</sub>H<sub>2</sub> এবং C<sub>6</sub>H<sub>6</sub></label></li>
+        <li class="option-item"><label><input type="radio" name="q4" value="c"> c. C<sub>2</sub>H<sub>5</sub>OH এবং CH<sub>3</sub>OH</label></li>
+        <li class="option-item"><label><input type="radio" name="q4" value="d"> d. CH<sub>3</sub>-O-CH<sub>3</sub> এবং C<sub>2</sub>H<sub>5</sub>-O-C<sub>2</sub>H<sub>5</sub></label></li>
+      </ul>
+    </div>
+
+    <div class="question-card" id="q5">
+      <div class="q-title">5. H<sub>2</sub>, N<sub>2</sub> এবং কার্বন মনোক্সাইডের (CO) সমভরের একটি মিশ্রণকে একই শর্তে (27°C উষ্ণতায় নির্দিষ্ট আয়তনের পাত্রে) রাখা হলো। এদের আয়তনের অনুপাত কত হবে?</div>
+      <ul class="options-list">
+        <li class="option-item"><label><input type="radio" name="q5" value="a"> a. 14 : 1 : 1</label></li>
+        <li class="option-item"><label><input type="radio" name="q5" value="b"> b. 1 : 1 : 14</label></li>
+        <li class="option-item"><label><input type="radio" name="q5" value="c"> c. 2 : 14 : 1</label></li>
+        <li class="option-item"><label><input type="radio" name="q5" value="d"> d. 28 : 1 : 1</label></li>
+      </ul>
+    </div>
+
+    <div class="question-card" id="q6">
+      <div class="q-title">6. ক্লোরিনের গড় মোলার ভর 35.5 g mol<sup>-1</sup> হলে, প্রকৃতিতে <sup>35</sup>Cl এবং <sup>37</sup>Cl-এর অনুপাত কত?</div>
+      <ul class="options-list">
+        <li class="option-item"><label><input type="radio" name="q6" value="a"> a. 4 : 1</label></li>
+        <li class="option-item"><label><input type="radio" name="q6" value="b"> b. 3 : 1</label></li>
+        <li class="option-item"><label><input type="radio" name="q6" value="c"> c. 2 : 1</label></li>
+        <li class="option-item"><label><input type="radio" name="q6" value="d"> d. 1 : 1</label></li>
+      </ul>
+    </div>
+
+    <div class="question-card" id="q7">
+      <div class="q-title">7. গ্রাম এককে একটি অক্সিজেন পরমাণুর ভর হলো—</div>
+      <ul class="options-list">
+        <li class="option-item"><label><input type="radio" name="q7" value="a"> a. 2.656 × 10<sup>-23</sup> g</label></li>
+        <li class="option-item"><label><input type="radio" name="q7" value="b"> b. 1.567 × 10<sup>-22</sup> g</label></li>
+        <li class="option-item"><label><input type="radio" name="q7" value="c"> c. 2.0 × 10<sup>-22</sup> g</label></li>
+        <li class="option-item"><label><input type="radio" name="q7" value="d"> d. 3.5 × 10<sup>-23</sup> g</label></li>
+      </ul>
+    </div>
+
+    <div class="question-card" id="q8">
+      <div class="q-title">8. STP-তে একটি গ্যাসের ঘনত্ব 1.78 g/L। গ্যাসটির ১ মোলের ভর কত?</div>
+      <ul class="options-list">
+        <li class="option-item"><label><input type="radio" name="q8" value="a"> a. 39.9 g</label></li>
+        <li class="option-item"><label><input type="radio" name="q8" value="b"> b. 22.4 g</label></li>
+        <li class="option-item"><label><input type="radio" name="q8" value="c"> c. 3.56 g</label></li>
+        <li class="option-item"><label><input type="radio" name="q8" value="d"> d. 29 g</label></li>
+      </ul>
+    </div>
+
+    <div class="question-card" id="q9">
+      <div class="q-title">9. 34 g NH<sub>3</sub>-তে উপস্থিত মোট পরমাণুর সংখ্যা হলো—</div>
+      <ul class="options-list">
+        <li class="option-item"><label><input type="radio" name="q9" value="a"> a. 4 × 10<sup>23</sup></label></li>
+        <li class="option-item"><label><input type="radio" name="q9" value="b"> b. 18.1 × 10<sup>23</sup></label></li>
+        <li class="option-item"><label><input type="radio" name="q9" value="c"> c. 2 × 10<sup>23</sup></label></li>
+        <li class="option-item"><label><input type="radio" name="q9" value="d"> d. 48 × 10<sup>23</sup></label></li>
+      </ul>
+    </div>
+
+    <div class="question-card" id="q10">
+      <div class="q-title">10. STP-তে হিলিয়ামের ঘনত্ব 0.1784 g/L হলে, হিলিয়ামের প্রমাণ মোলার আয়তন কত?</div>
+      <ul class="options-list">
+        <li class="option-item"><label><input type="radio" name="q10" value="a"> a. 11.2 L</label></li>
+        <li class="option-item"><label><input type="radio" name="q10" value="b"> b. 22.4 L</label></li>
+        <li class="option-item"><label><input type="radio" name="q10" value="c"> c. 5.6 L</label></li>
+        <li class="option-item"><label><input type="radio" name="q10" value="d"> d. 2.8 L</label></li>
+      </ul>
+    </div>
+
+    <div class="question-card" id="q11">
+      <div class="q-title">11. 88 g CO<sub>2</sub>-তে কত সংখ্যক অক্সিজেন পরমাণু বর্তমান?</div>
+      <ul class="options-list">
+        <li class="option-item"><label><input type="radio" name="q11" value="a"> a. 24.09 × 10<sup>23</sup></label></li>
+        <li class="option-item"><label><input type="radio" name="q11" value="b"> b. 6.023 × 10<sup>23</sup></label></li>
+        <li class="option-item"><label><input type="radio" name="q11" value="c"> c. 44 × 10<sup>23</sup></label></li>
+        <li class="option-item"><label><input type="radio" name="q11" value="d"> d. 22 × 10<sup>24</sup></label></li>
+      </ul>
+    </div>
+
+    <div class="question-card" id="q12">
+      <div class="q-title">12. এক মোল CO<sub>2</sub>-তে কোনটা উপস্থিত?</div>
+      <ul class="options-list">
+        <li class="option-item"><label><input type="radio" name="q12" value="a"> a. 3 g পরমাণু CO<sub>2</sub></label></li>
+        <li class="option-item"><label><input type="radio" name="q12" value="b"> b. 18.1 × 10<sup>23</sup> সংখ্যক CO<sub>2</sub> অণু</label></li>
+        <li class="option-item"><label><input type="radio" name="q12" value="c"> c. 6.02 × 10<sup>23</sup> সংখ্যক O<sub>2</sub> পরমাণু</label></li>
+        <li class="option-item"><label><input type="radio" name="q12" value="d"> d. 6.02 × 10<sup>23</sup> সংখ্যক C পরমাণু</label></li>
+      </ul>
+    </div>
+
+    <div class="question-card" id="q13">
+      <div class="q-title">13. 0.1 মোল একটি ত্রি-পরমাণুক গ্যাসে পরমাণুর সংখ্যা কত? (N<sub>A</sub> = 6.02 × 10<sup>23</sup>)</div>
+      <ul class="options-list">
+        <li class="option-item"><label><input type="radio" name="q13" value="a"> a. 6.026 × 10<sup>22</sup></label></li>
+        <li class="option-item"><label><input type="radio" name="q13" value="b"> b. 1.806 × 10<sup>23</sup></label></li>
+        <li class="option-item"><label><input type="radio" name="q13" value="c"> c. 3.600 × 10<sup>23</sup></label></li>
+        <li class="option-item"><label><input type="radio" name="q13" value="d"> d. 1.800 × 10<sup>22</sup></label></li>
+      </ul>
+    </div>
+
+    <div class="question-card" id="q14">
+      <div class="q-title">14. এক মোল সুক্রোজে (C<sub>12</sub>H<sub>22</sub>O<sub>11</sub>) কত সংখ্যক পরমাণু বর্তমান?</div>
+      <ul class="options-list">
+        <li class="option-item"><label><input type="radio" name="q14" value="a"> a. 20 × 6.02 × 10<sup>23</sup> atoms/mol</label></li>
+        <li class="option-item"><label><input type="radio" name="q14" value="b"> b. 45 × 6.02 × 10<sup>23</sup> atoms/mol</label></li>
+        <li class="option-item"><label><input type="radio" name="q14" value="c"> c. 5 × 6.02 × 10<sup>23</sup> atoms/mol</label></li>
+        <li class="option-item"><label><input type="radio" name="q14" value="d"> d. ওপরের কোনোটিই নয়</label></li>
+      </ul>
+    </div>
+
+    <div class="question-card" id="q15">
+      <div class="q-title">15. STP-তে 1 cc N<sub>2</sub>O-তে উপস্থিত—</div>
+      <ul class="options-list">
+        <li class="option-item"><label><input type="radio" name="q15" value="a"> a. (1.8 / 224) × 10<sup>22</sup> সংখ্যক পরমাণু</label></li>
+        <li class="option-item"><label><input type="radio" name="q15" value="b"> b. (6.02 / 22400) × 10<sup>23</sup> সংখ্যক অণু</label></li>
+        <li class="option-item"><label><input type="radio" name="q15" value="c"> c. (1.32 / 224) × 10<sup>23</sup> টি ইলেকট্রন</label></li>
+        <li class="option-item"><label><input type="radio" name="q15" value="d"> d. ওপরের সব কয়টি</label></li>
+      </ul>
+    </div>
+
+    <div class="question-card" id="q16">
+      <div class="q-title">16. যার মধ্যে সর্বোচ্চ সংখ্যক জলের অণু বর্তমান—</div>
+      <ul class="options-list">
+        <li class="option-item"><label><input type="radio" name="q16" value="a"> a. 1.8 g জলে</label></li>
+        <li class="option-item"><label><input type="radio" name="q16" value="b"> b. 18 g জলে</label></li>
+        <li class="option-item"><label><input type="radio" name="q16" value="c"> c. 18 মোল জলে</label></li>
+        <li class="option-item"><label><input type="radio" name="q16" value="d"> d. 18 টি জলের অণুতে</label></li>
+      </ul>
+    </div>
+
+    <div class="question-card" id="q17">
+      <div class="q-title">17. নিম্নে প্রদত্ত কোনটিতে অণু সংখ্যা সর্বাধিক?</div>
+      <ul class="options-list">
+        <li class="option-item"><label><input type="radio" name="q17" value="a"> a. 44 g CO<sub>2</sub></label></li>
+        <li class="option-item"><label><input type="radio" name="q17" value="b"> b. 48 g O<sub>3</sub></label></li>
+        <li class="option-item"><label><input type="radio" name="q17" value="c"> c. 8 g H<sub>2</sub></label></li>
+        <li class="option-item"><label><input type="radio" name="q17" value="d"> d. 64 g SO<sub>2</sub></label></li>
+      </ul>
+    </div>
+
+    <div class="question-card" id="q18">
+      <div class="q-title">18. প্রমাণ শর্তে এক লিটার বায়ুতে আয়তন হিসেবে 21% অক্সিজেন বর্তমান। এই অক্সিজেনের মোল সংখ্যা হবে—</div>
+      <ul class="options-list">
+        <li class="option-item"><label><input type="radio" name="q18" value="a"> a. 0.0093 মোল</label></li>
+        <li class="option-item"><label><input type="radio" name="q18" value="b"> b. 2.10 মোল</label></li>
+        <li class="option-item"><label><input type="radio" name="q18" value="c"> c. 0.186 মোল</label></li>
+        <li class="option-item"><label><input type="radio" name="q18" value="d"> d. 0.21 মোল</label></li>
+      </ul>
+    </div>
+
+    <div class="question-card" id="q19">
+      <div class="q-title">19. 4.2 g N<sub>3</sub><sup>-</sup> আয়নে মোট যোজ্যতা ইলেকট্রনের সংখ্যা হলো—</div>
+      <ul class="options-list">
+        <li class="option-item"><label><input type="radio" name="q19" value="a"> a. 2.1 N<sub>A</sub></label></li>
+        <li class="option-item"><label><input type="radio" name="q19" value="b"> b. 4.2 N<sub>A</sub></label></li>
+        <li class="option-item"><label><input type="radio" name="q19" value="c"> c. 1.6 N<sub>A</sub></label></li>
+        <li class="option-item"><label><input type="radio" name="q19" value="d"> d. 3.2 N<sub>A</sub></label></li>
+      </ul>
+    </div>
+
+    <div class="question-card" id="q20">
+      <div class="q-title">20. নিম্নলিখিতগুলির মধ্যে কোনটি সবচেয়ে হালকা?</div>
+      <ul class="options-list">
+        <li class="option-item"><label><input type="radio" name="q20" value="a"> a. 0.2 মোল হাইড্রোজেন গ্যাস</label></li>
+        <li class="option-item"><label><input type="radio" name="q20" value="b"> b. 6.023 × 10<sup>22</sup> সংখ্যক নাইট্রোজেন অণু</label></li>
+        <li class="option-item"><label><input type="radio" name="q20" value="c"> c. 0.1 g সিলভার</label></li>
+        <li class="option-item"><label><input type="radio" name="q20" value="d"> d. 0.1 মোল অক্সিজেন গ্যাস</label></li>
+      </ul>
+    </div>
+
+    <div class="question-card" id="q21">
+      <div class="q-title">21. অক্সিজেন ও নাইট্রোজেন গ্যাসের একটি মিশ্রণে গ্যাস দুটির ভরের অনুপাত 1 : 4। তাদের অণু সংখ্যার অনুপাত কত?</div>
+      <ul class="options-list">
+        <li class="option-item"><label><input type="radio" name="q21" value="a"> a. 3 : 16</label></li>
+        <li class="option-item"><label><input type="radio" name="q21" value="b"> b. 1 : 4</label></li>
+        <li class="option-item"><label><input type="radio" name="q21" value="c"> c. 7 : 32</label></li>
+        <li class="option-item"><label><input type="radio" name="q21" value="d"> d. 1 : 8</label></li>
+      </ul>
+    </div>
+
+    <div class="question-card" id="q22">
+      <div class="q-title">22. 558.5 g Fe (পারমাণবিক ভর = 55.85 g mol<sup>-1</sup>)-এর পরমাণু সংখ্যা হলো—</div>
+      <ul class="options-list">
+        <li class="option-item"><label><input type="radio" name="q22" value="a"> a. 60 g কার্বনে উপস্থিত পরমাণুর দ্বিগুণ</label></li>
+        <li class="option-item"><label><input type="radio" name="q22" value="b"> b. 6.023 × 10<sup>22</sup></label></li>
+        <li class="option-item"><label><input type="radio" name="q22" value="c"> c. 8 g হিলিয়ামে উপস্থিত পরমাণুর অর্ধেক</label></li>
+        <li class="option-item"><label><input type="radio" name="q22" value="d"> d. 558.5 × 6.023 × 10<sup>23</sup></label></li>
+      </ul>
+    </div>
+
+    <div class="question-card" id="q23">
+      <div class="q-title">23. 0.018 g জলে জল-অণুর সংখ্যা হলো—</div>
+      <ul class="options-list">
+        <li class="option-item"><label><input type="radio" name="q23" value="a"> a. 6.023 × 10<sup>23</sup></label></li>
+        <li class="option-item"><label><input type="radio" name="q23" value="b"> b. 6.023 × 10<sup>20</sup></label></li>
+        <li class="option-item"><label><input type="radio" name="q23" value="c"> c. 6.023 × 10<sup>21</sup></label></li>
+        <li class="option-item"><label><input type="radio" name="q23" value="d"> d. 1 × 6.023 × 10<sup>22</sup></label></li>
+      </ul>
+    </div>
+
+    <div class="question-card" id="q24">
+      <div class="q-title">24. কোনটিতে 0.5 গ্রাম-পরমাণু মৌল আছে?</div>
+      <ul class="options-list">
+        <li class="option-item"><label><input type="radio" name="q24" value="a"> a. 40 g N<sub>2</sub></label></li>
+        <li class="option-item"><label><input type="radio" name="q24" value="b"> b. 40 g O<sub>2</sub></label></li>
+        <li class="option-item"><label><input type="radio" name="q24" value="c"> c. 20 g Ca</label></li>
+        <li class="option-item"><label><input type="radio" name="q24" value="d"> d. 20 g C</label></li>
+      </ul>
+    </div>
+
+    <div class="question-card" id="q25">
+      <div class="q-title">25. মিথেনের মোলের ভিত্তিতে কার্বনের শতকরা পরিমাণ হলো—</div>
+      <ul class="options-list">
+        <li class="option-item"><label><input type="radio" name="q25" value="a"> a. 80%</label></li>
+        <li class="option-item"><label><input type="radio" name="q25" value="b"> b. 25%</label></li>
+        <li class="option-item"><label><input type="radio" name="q25" value="c"> c. 75%</label></li>
+        <li class="option-item"><label><input type="radio" name="q25" value="d"> d. 20%</label></li>
+      </ul>
+    </div>
+
+    <div class="question-card" id="q26">
+      <div class="q-title">26. একটি মৌলের তুল্যাঙ্কভার 4। এটির ক্লোরাইডের বাষ্প ঘনত্ব 59.23 হলে, মৌলটির যোজ্যতা কত হবে?</div>
+      <ul class="options-list">
+        <li class="option-item"><label><input type="radio" name="q26" value="a"> a. 4</label></li>
+        <li class="option-item"><label><input type="radio" name="q26" value="b"> b. 3</label></li>
+        <li class="option-item"><label><input type="radio" name="q26" value="c"> c. 2</label></li>
+        <li class="option-item"><label><input type="radio" name="q26" value="d"> d. 1</label></li>
+      </ul>
+    </div>
+
+    <div class="question-card" id="q27">
+      <div class="q-title">27. অ্যাসিড মাধ্যমে KMnO<sub>4</sub>-এর তুল্যাঙ্কভার কত? (K=39, Mn=55)</div>
+      <ul class="options-list">
+        <li class="option-item"><label><input type="radio" name="q27" value="a"> a. 158</label></li>
+        <li class="option-item"><label><input type="radio" name="q27" value="b"> b. 31.6</label></li>
+        <li class="option-item"><label><input type="radio" name="q27" value="c"> c. 15.8</label></li>
+        <li class="option-item"><label><input type="radio" name="q27" value="d"> d. 112</label></li>
+      </ul>
+    </div>
+
+    <div class="question-card" id="q28">
+      <div class="q-title">28. দুটি মৌল পরস্পরের সঙ্গে যুক্ত হয়—</div>
+      <ul class="options-list">
+        <li class="option-item"><label><input type="radio" name="q28" value="a"> a. পারমাণবিক গুরুত্বের অনুপাতে</label></li>
+        <li class="option-item"><label><input type="radio" name="q28" value="b"> b. আণবিক গুরুত্বের অনুপাতে</label></li>
+        <li class="option-item"><label><input type="radio" name="q28" value="c"> c. গ্রাম-অণুর অনুপাতে</label></li>
+        <li class="option-item"><label><input type="radio" name="q28" value="d"> d. তুল্যাঙ্কভারের অনুপাতে</label></li>
+      </ul>
+    </div>
+
+    <div class="question-card" id="q29">
+      <div class="q-title">29. Fe<sub>2</sub>O<sub>3</sub> যৌগে আয়রনের তুল্যাঙ্কভার কত?</div>
+      <ul class="options-list">
+        <li class="option-item"><label><input type="radio" name="q29" value="a"> a. 18.6</label></li>
+        <li class="option-item"><label><input type="radio" name="q29" value="b"> b. 28</label></li>
+        <li class="option-item"><label><input type="radio" name="q29" value="c"> c. 56</label></li>
+        <li class="option-item"><label><input type="radio" name="q29" value="d"> d. 18.67 (বা নিকটস্থ মান)</label></li>
+      </ul>
+    </div>
+
+    <div class="question-card" id="q30">
+      <div class="q-title">30. একটি যৌগ প্রস্তুতিতে A মৌলের 10 g-এর সঙ্গে B মৌলের 15 g বিক্রিয়া করে। যদি A-এর তুল্যাঙ্কভার 20 হয়, তবে B-এর তুল্যাঙ্কভার কত?</div>
+      <ul class="options-list">
+        <li class="option-item"><label><input type="radio" name="q30" value="a"> a. 30</label></li>
+        <li class="option-item"><label><input type="radio" name="q30" value="b"> b. 60</label></li>
+        <li class="option-item"><label><input type="radio" name="q30" value="c"> c. 45</label></li>
+        <li class="option-item"><label><input type="radio" name="q30" value="d"> d. কোনোটিই নয়</label></li>
+      </ul>
+    </div>
+
+    <div class="question-card" id="q31">
+      <div class="q-title">31. কোনো ধাতব অক্সাইড M<sub>m</sub>O<sub>n</sub>-এ M-এর তুল্যাঙ্কভার x হলে, ধাতুটির পারমাণবিক ভর কত?</div>
+      <ul class="options-list">
+        <li class="option-item"><label><input type="radio" name="q31" value="a"> a. (2nx) / m</label></li>
+        <li class="option-item"><label><input type="radio" name="q31" value="b"> b. (2mx) / n</label></li>
+        <li class="option-item"><label><input type="radio" name="q31" value="c"> c. (2mn) / x</label></li>
+        <li class="option-item"><label><input type="radio" name="q31" value="d"> d. কোনোটিই নয়</label></li>
+      </ul>
+    </div>
+
+    <div class="question-card" id="q32">
+      <div class="q-title">32. 0.5 g কোনো ধাতু থেকে 0.79 g ধাতব অক্সাইড পাওয়া গেলে ধাতুটির তুল্যাঙ্কভার কত?</div>
+      <ul class="options-list">
+        <li class="option-item"><label><input type="radio" name="q32" value="a"> a. 10</label></li>
+        <li class="option-item"><label><input type="radio" name="q32" value="b"> b. 13.8</label></li>
+        <li class="option-item"><label><input type="radio" name="q32" value="c"> c. 20</label></li>
+        <li class="option-item"><label><input type="radio" name="q32" value="d"> d. 40</label></li>
+      </ul>
+    </div>
+
+    <div class="question-card" id="q33">
+      <div class="q-title">33. একটি ধাতব ক্লোরাইডের 74.5 g-এ 35.5 g ক্লোরিন থাকলে ধাতুটির তুল্যাঙ্কভার হবে—</div>
+      <ul class="options-list">
+        <li class="option-item"><label><input type="radio" name="q33" value="a"> a. 19.5</label></li>
+        <li class="option-item"><label><input type="radio" name="q33" value="b"> b. 35.5</label></li>
+        <li class="option-item"><label><input type="radio" name="q33" value="c"> c. 39.0</label></li>
+        <li class="option-item"><label><input type="radio" name="q33" value="d"> d. 78.0</label></li>
+      </ul>
+    </div>
+
+    <div class="question-card" id="q34">
+      <div class="q-title">34. একটি যৌগের স্থূল সংকেত CH<sub>2</sub>O<sub>2</sub> এবং আণবিক ভর 92। যৌগটির আণবিক সংকেত কী?</div>
+      <ul class="options-list">
+        <li class="option-item"><label><input type="radio" name="q34" value="a"> a. C<sub>2</sub>H<sub>2</sub>O<sub>2</sub></label></li>
+        <li class="option-item"><label><input type="radio" name="q34" value="b"> b. C<sub>2</sub>H<sub>2</sub>O<sub>4</sub></label></li>
+        <li class="option-item"><label><input type="radio" name="q34" value="c"> c. C<sub>2</sub>H<sub>4</sub>O<sub>4</sub></label></li>
+        <li class="option-item"><label><input type="radio" name="q34" value="d"> d. CH<sub>4</sub>O<sub>4</sub></label></li>
+      </ul>
+    </div>
+
+    <div class="question-card" id="q35">
+      <div class="q-title">35. একটি জৈব যৌগের বিশ্লেষণে পাওয়া যায় C = 54.2%, H = 9.2% (ভরের ভিত্তিতে)। এর স্থূল সংকেত হবে—</div>
+      <ul class="options-list">
+        <li class="option-item"><label><input type="radio" name="q35" value="a"> a. CHO<sub>2</sub></label></li>
+        <li class="option-item"><label><input type="radio" name="q35" value="b"> b. CH<sub>2</sub>O</label></li>
+        <li class="option-item"><label><input type="radio" name="q35" value="c"> c. C<sub>2</sub>H<sub>8</sub>O</label></li>
+        <li class="option-item"><label><input type="radio" name="q35" value="d"> d. C<sub>2</sub>H<sub>4</sub>O</label></li>
+      </ul>
+    </div>
+
+    <div class="question-card" id="q36">
+      <div class="q-title">36. একটি যৌগের স্থূল সংকেত CH<sub>2</sub> এবং এক মোল যৌগের ভর 42 g। এর আণবিক সংকেত হলো—</div>
+      <ul class="options-list">
+        <li class="option-item"><label><input type="radio" name="q36" value="a"> a. C<sub>3</sub>H<sub>6</sub></label></li>
+        <li class="option-item"><label><input type="radio" name="q36" value="b"> b. C<sub>3</sub>H<sub>8</sub></label></li>
+        <li class="option-item"><label><input type="radio" name="q36" value="c"> c. CH<sub>2</sub></label></li>
+        <li class="option-item"><label><input type="radio" name="q36" value="d"> d. C<sub>2</sub>H<sub>2</sub></label></li>
+      </ul>
+    </div>
+
+    <div class="question-card" id="q37">
+      <div class="q-title">37. একটি যৌগে C, H এবং N-এর ভরের অনুপাত 9 : 1 : 3.5। যৌগটির আণবিক ভর 108 হলে, আণবিক সংকেত হবে—</div>
+      <ul class="options-list">
+        <li class="option-item"><label><input type="radio" name="q37" value="a"> a. C<sub>2</sub>H<sub>6</sub>N<sub>2</sub></label></li>
+        <li class="option-item"><label><input type="radio" name="q37" value="b"> b. C<sub>3</sub>H<sub>4</sub>N</label></li>
+        <li class="option-item"><label><input type="radio" name="q37" value="c"> c. C<sub>6</sub>H<sub>8</sub>N<sub>2</sub></label></li>
+        <li class="option-item"><label><input type="radio" name="q37" value="d"> d. C<sub>9</sub>H<sub>12</sub>N<sub>3</sub></label></li>
+      </ul>
+    </div>
+
+    <div class="question-card" id="q38">
+      <div class="q-title">38. যদি 40 g CaCO<sub>3</sub>-এর সঙ্গে 40 g HCl বিক্রিয়া করে, তবে কোন্ বিক্রিয়কটি লিমিটিং বিকারক (Limiting reagent) হবে?</div>
+      <ul class="options-list">
+        <li class="option-item"><label><input type="radio" name="q38" value="a"> a. CaCO<sub>3</sub></label></li>
+        <li class="option-item"><label><input type="radio" name="q38" value="b"> b. HCl</label></li>
+        <li class="option-item"><label><input type="radio" name="q38" value="c"> c. a এবং b উভয়ই</label></li>
+        <li class="option-item"><label><input type="radio" name="q38" value="d"> d. কোনোটিই নয়</label></li>
+      </ul>
+    </div>
+
+    <div class="question-card" id="q39">
+      <div class="q-title">39. একটি যৌগের মধ্যে 38.8% কার্বন, 16.0% হাইড্রোজেন এবং 45.2% নাইট্রোজেন থাকলে যৌগটির সংকেত হলো—</div>
+      <ul class="options-list">
+        <li class="option-item"><label><input type="radio" name="q39" value="a"> a. CH<sub>3</sub>NH<sub>2</sub></label></li>
+        <li class="option-item"><label><input type="radio" name="q39" value="b"> b. CH<sub>3</sub>CN</label></li>
+        <li class="option-item"><label><input type="radio" name="q39" value="c"> c. C<sub>2</sub>H<sub>5</sub>CN</label></li>
+        <li class="option-item"><label><input type="radio" name="q39" value="d"> d. CH<sub>2</sub>(NH)<sub>2</sub></label></li>
+      </ul>
+    </div>
+
+    <div class="question-card" id="q40">
+      <div class="q-title">40. একটি 60 g যৌগে 24 g কার্বন, 4 g হাইড্রোজেন এবং 32 g অক্সিজেন উপস্থিত। যৌগটির স্থূল সংকেত হলো—</div>
+      <ul class="options-list">
+        <li class="option-item"><label><input type="radio" name="q40" value="a"> a. C<sub>2</sub>H<sub>2</sub>O<sub>2</sub></label></li>
+        <li class="option-item"><label><input type="radio" name="q40" value="b"> b. HCHO</label></li>
+        <li class="option-item"><label><input type="radio" name="q40" value="c"> c. CH<sub>2</sub>O<sub>2</sub></label></li>
+        <li class="option-item"><label><input type="radio" name="q40" value="d"> d. CH<sub>2</sub>O</label></li>
+      </ul>
+    </div>
+
+    <div class="question-card" id="q41">
+      <div class="q-title">41. STP-তে 2.80 L হাইড্রোজেনের সঙ্গে কত পরিমাণ কপার অক্সাইড বিক্রিয়া করবে?</div>
+      <ul class="options-list">
+        <li class="option-item"><label><input type="radio" name="q41" value="a"> a. 79.5 g</label></li>
+        <li class="option-item"><label><input type="radio" name="q41" value="b"> b. 2 g</label></li>
+        <li class="option-item"><label><input type="radio" name="q41" value="c"> c. 9.9 g</label></li>
+        <li class="option-item"><label><input type="radio" name="q41" value="d"> d. 22.4 g</label></li>
+      </ul>
+    </div>
+
+    <div class="question-card" id="q42">
+      <div class="q-title">42. 2.8 kg ইথিলিনের সম্পূর্ণ দহনের জন্য প্রয়োজনীয় অক্সিজেনের ভর কত?</div>
+      <ul class="options-list">
+        <li class="option-item"><label><input type="radio" name="q42" value="a"> a. 2.8 kg</label></li>
+        <li class="option-item"><label><input type="radio" name="q42" value="b"> b. 6.4 kg</label></li>
+        <li class="option-item"><label><input type="radio" name="q42" value="c"> c. 9.6 kg</label></li>
+        <li class="option-item"><label><input type="radio" name="q42" value="d"> d. 0.96 kg</label></li>
+      </ul>
+    </div>
+
+    <div class="question-card" id="q43">
+      <div class="q-title">43. 4NH<sub>3</sub>(g) + 5O<sub>2</sub>(g) → 4NO(g) + 6H<sub>2</sub>O(l) বিক্রিয়াটিতে যখন 1 মোল অ্যামোনিয়া এবং 1 মোল O<sub>2</sub> সম্পূর্ণ বিক্রিয়া করে, তখন—</div>
+      <ul class="options-list">
+        <li class="option-item"><label><input type="radio" name="q43" value="a"> a. 1.0 মোল H<sub>2</sub>O উৎপন্ন হয়</label></li>
+        <li class="option-item"><label><input type="radio" name="q43" value="b"> b. 1.0 মোল NO উৎপন্ন হবে</label></li>
+        <li class="option-item"><label><input type="radio" name="q43" value="c"> c. সমস্ত O<sub>2</sub> বিক্রিয়া করবে</label></li>
+        <li class="option-item"><label><input type="radio" name="q43" value="d"> d. সমস্ত NH<sub>3</sub> বিক্রিয়া করবে</label></li>
+      </ul>
+    </div>
+
+    <div class="question-card" id="q44">
+      <div class="q-title">44. হেবার পদ্ধতিতে 20 মোল অ্যামোনিয়া প্রস্তুত করতে কত মোল হাইড্রোজেন দরকার?</div>
+      <ul class="options-list">
+        <li class="option-item"><label><input type="radio" name="q44" value="a"> a. 40</label></li>
+        <li class="option-item"><label><input type="radio" name="q44" value="b"> b. 10</label></li>
+        <li class="option-item"><label><input type="radio" name="q44" value="c"> c. 20</label></li>
+        <li class="option-item"><label><input type="radio" name="q44" value="d"> d. 30</label></li>
+      </ul>
+    </div>
+
+    <div class="question-card" id="q45">
+      <div class="q-title">45. কত পরিমাণ CaCO<sub>3</sub>-কে উত্তপ্ত করলে উৎপন্ন CO<sub>2</sub> গ্যাস 0.2 মোল Na<sub>2</sub>CO<sub>3</sub>-কে NaHCO<sub>3</sub>-এ রূপান্তরিত করবে?</div>
+      <ul class="options-list">
+        <li class="option-item"><label><input type="radio" name="q45" value="a"> a. 40 g</label></li>
+        <li class="option-item"><label><input type="radio" name="q45" value="b"> b. 20 g</label></li>
+        <li class="option-item"><label><input type="radio" name="q45" value="c"> c. 30 g</label></li>
+        <li class="option-item"><label><input type="radio" name="q45" value="d"> d. 49 g</label></li>
+      </ul>
+    </div>
+
+    <div class="question-card" id="q46">
+      <div class="q-title">46. STP-তে কত আয়তনের H<sub>2</sub> গ্যাস পাওয়া যাবে যখন 1.45 g ধাতুর (তুল্যাঙ্কভার = 9) সঙ্গে লঘু H<sub>2</sub>SO<sub>4</sub>-এর বিক্রিয়া করানো হবে?</div>
+      <ul class="options-list">
+        <li class="option-item"><label><input type="radio" name="q46" value="a"> a. 1.8044 L</label></li>
+        <li class="option-item"><label><input type="radio" name="q46" value="b"> b. 1.8404 cc</label></li>
+        <li class="option-item"><label><input type="radio" name="q46" value="c"> c. 200 cc</label></li>
+        <li class="option-item"><label><input type="radio" name="q46" value="d"> d. কোনোটিই নয়</label></li>
+      </ul>
+    </div>
+
+    <div class="question-card" id="q47">
+      <div class="q-title">47. 30 g জলে 2.82 g গ্লুকোজ দ্রবীভূত করা হলো। দ্রবণে গ্লুকোজের মোল ভগ্নাংশ কত হবে?</div>
+      <ul class="options-list">
+        <li class="option-item"><label><input type="radio" name="q47" value="a"> a. 0.01</label></li>
+        <li class="option-item"><label><input type="radio" name="q47" value="b"> b. 0.99</label></li>
+        <li class="option-item"><label><input type="radio" name="q47" value="c"> c. 0.52</label></li>
+        <li class="option-item"><label><input type="radio" name="q47" value="d"> d. 1.66</label></li>
+      </ul>
+    </div>
+
+    <div class="question-card" id="q48">
+      <div class="q-title">48. দ্রবণের কোন্ গাড়ত্ব প্রকাশের পদ্ধতিটি উষ্ণতার সঙ্গে পরিবর্তিত হয় না?</div>
+      <ul class="options-list">
+        <li class="option-item"><label><input type="radio" name="q48" value="a"> a. মোলারিটি</label></li>
+        <li class="option-item"><label><input type="radio" name="q48" value="b"> b. নরম্যালিটি</label></li>
+        <li class="option-item"><label><input type="radio" name="q48" value="c"> c. মোলালিটি</label></li>
+        <li class="option-item"><label><input type="radio" name="q48" value="d"> d. সব কয়টি</label></li>
+      </ul>
+    </div>
+
+    <div class="question-card" id="q49">
+      <div class="q-title">49. 0.2 (N) Na<sub>2</sub>CO<sub>3</sub> দ্রবণের মোলারিটি কত?</div>
+      <ul class="options-list">
+        <li class="option-item"><label><input type="radio" name="q49" value="a"> a. 0.1 (M)</label></li>
+        <li class="option-item"><label><input type="radio" name="q49" value="b"> b. 0 (M)</label></li>
+        <li class="option-item"><label><input type="radio" name="q49" value="c"> c. 0.4 (M)</label></li>
+        <li class="option-item"><label><input type="radio" name="q49" value="d"> d. 0.2 (M)</label></li>
+      </ul>
+    </div>
+
+    <div class="question-card" id="q50">
+      <div class="q-title">50. 10 mL 2(M) NaOH দ্রবণের সঙ্গে 200 mL 0.5(M) NaOH দ্রবণ যোগ করলে অন্তিম গাড়ত্ব কত হবে?</div>
+      <ul class="options-list">
+        <li class="option-item"><label><input type="radio" name="q50" value="a"> a. 0.57 (M)</label></li>
+        <li class="option-item"><label><input type="radio" name="q50" value="b"> b. 5.7 (M)</label></li>
+        <li class="option-item"><label><input type="radio" name="q50" value="c"> c. 11.4 (M)</label></li>
+        <li class="option-item"><label><input type="radio" name="q50" value="d"> d. 1.14 (M)</label></li>
+      </ul>
+    </div>
+
+    <div class="question-card" id="q51">
+      <div class="q-title">51. 100 mL দ্রবণে 6.02 × 10<sup>20</sup> সংখ্যক ইউরিয়া অণু বর্তমান। দ্রবণের গাড়ত্ব কত?</div>
+      <ul class="options-list">
+        <li class="option-item"><label><input type="radio" name="q51" value="a"> a. 0.001 (M)</label></li>
+        <li class="option-item"><label><input type="radio" name="q51" value="b"> b. 0.1 (M)</label></li>
+        <li class="option-item"><label><input type="radio" name="q51" value="c"> c. 0.02 (M)</label></li>
+        <li class="option-item"><label><input type="radio" name="q51" value="d"> d. 0.01 (M)</label></li>
+      </ul>
+    </div>
+
+    <div class="question-card" id="q52">
+      <div class="q-title">52. যদি দ্রবণের ঘনত্ব 1.17 g/cc হয় (HCl দ্রবণের ক্ষেত্রে), তবে দ্রবণের মোলারিটি কত হবে?</div>
+      <ul class="options-list">
+        <li class="option-item"><label><input type="radio" name="q52" value="a"> a. 36.5</label></li>
+        <li class="option-item"><label><input type="radio" name="q52" value="b"> b. 18.25</label></li>
+        <li class="option-item"><label><input type="radio" name="q52" value="c"> c. 32.05</label></li>
+        <li class="option-item"><label><input type="radio" name="q52" value="d"> d. 42.10</label></li>
+      </ul>
+    </div>
+
+    <div class="question-card" id="q53">
+      <div class="q-title">53. 2 L আয়তনের 0.1(M) চিনির (C<sub>12</sub>H<sub>22</sub>O<sub>11</sub>) দ্রবণ প্রস্তুতিতে প্রয়োজনীয় চিনির পরিমাণ কত?</div>
+      <ul class="options-list">
+        <li class="option-item"><label><input type="radio" name="q53" value="a"> a. 136.8 g</label></li>
+        <li class="option-item"><label><input type="radio" name="q53" value="b"> b. 34.2 g</label></li>
+        <li class="option-item"><label><input type="radio" name="q53" value="c"> c. 68.4 g</label></li>
+        <li class="option-item"><label><input type="radio" name="q53" value="d"> d. 17.1 g</label></li>
+      </ul>
+    </div>
+
+    <div class="question-card" id="q54">
+      <div class="q-title">54. 0.3(M) ফসফরাস অ্যাসিড (H<sub>3</sub>PO<sub>3</sub>)-এর নরম্যাল মাত্রা কত?</div>
+      <ul class="options-list">
+        <li class="option-item"><label><input type="radio" name="q54" value="a"> a. 0.1</label></li>
+        <li class="option-item"><label><input type="radio" name="q54" value="b"> b. 0.9</label></li>
+        <li class="option-item"><label><input type="radio" name="q54" value="c"> c. 0.3</label></li>
+        <li class="option-item"><label><input type="radio" name="q54" value="d"> d. 0.6</label></li>
+      </ul>
+    </div>
+
+    <div class="question-card" id="q55">
+      <div class="q-title">55. উষ্ণতা বৃদ্ধিতে নীচের যেটির পরিবর্তন হয়—</div>
+      <ul class="options-list">
+        <li class="option-item"><label><input type="radio" name="q55" value="a"> a. মোলালিটি</label></li>
+        <li class="option-item"><label><input type="radio" name="q55" value="b"> b. দ্রাবের ভরের ভগ্নাংশ</label></li>
+        <li class="option-item"><label><input type="radio" name="q55" value="c"> c. মোলারিটি</label></li>
+        <li class="option-item"><label><input type="radio" name="q55" value="d"> d. মোল ভগ্নাংশ</label></li>
+      </ul>
+    </div>
+
+    <div class="question-card" id="q56">
+      <div class="q-title">56. 500 mL দ্রবণে 5.85 g NaCl বর্তমান। দ্রবণের মোলারিটি হবে—</div>
+      <ul class="options-list">
+        <li class="option-item"><label><input type="radio" name="q56" value="a"> a. 4 mol L<sup>-1</sup></label></li>
+        <li class="option-item"><label><input type="radio" name="q56" value="b"> b. 20 mol L<sup>-1</sup></label></li>
+        <li class="option-item"><label><input type="radio" name="q56" value="c"> c. 0.2 mol L<sup>-1</sup></label></li>
+        <li class="option-item"><label><input type="radio" name="q56" value="d"> d. 2 mol L<sup>-1</sup></label></li>
+      </ul>
+    </div>
+
+    <h2>MCQ Type-II (বিশেষ ধরন)</h2>
+
+    <h3>শূন্যস্থান পূরণ (Fill in the blanks)</h3>
+
+    <div class="question-card" id="q57">
+      <div class="q-title">57. আইসোমারগুলির ক্ষেত্রে ____________ সূত্রের বিপরীত বক্তব্য সত্য হয় না।</div>
+      <ul class="options-list">
+        <li class="option-item"><label><input type="radio" name="q57" value="a"> a. স্থিরানুপাত</label></li>
+        <li class="option-item"><label><input type="radio" name="q57" value="b"> b. গুণানুপাত</label></li>
+        <li class="option-item"><label><input type="radio" name="q57" value="c"> c. মিথোনুপাত</label></li>
+        <li class="option-item"><label><input type="radio" name="q57" value="d"> d. গে-লুসাক</label></li>
+      </ul>
+    </div>
+
+    <div class="question-card" id="q58">
+      <div class="q-title">58. অ্যাভোগাড্রো প্রকল্প শুধুমাত্র ____________ পদার্থের ক্ষেত্রে প্রযোজ্য।</div>
+      <ul class="options-list">
+        <li class="option-item"><label><input type="radio" name="q58" value="a"> a. তরল</label></li>
+        <li class="option-item"><label><input type="radio" name="q58" value="b"> b. কঠিন</label></li>
+        <li class="option-item"><label><input type="radio" name="q58" value="c"> c. গ্যাসীয়</label></li>
+        <li class="option-item"><label><input type="radio" name="q58" value="d"> d. কোনোটিই নয়</label></li>
+      </ul>
+    </div>
+
+    <div class="question-card" id="q59">
+      <div class="q-title">59. CuO যৌগে Cu-এর তুল্যাঙ্কভার হলো—</div>
+      <ul class="options-list">
+        <li class="option-item"><label><input type="radio" name="q59" value="a"> a. 63.5</label></li>
+        <li class="option-item"><label><input type="radio" name="q59" value="b"> b. 6.35</label></li>
+        <li class="option-item"><label><input type="radio" name="q59" value="c"> c. 3.175</label></li>
+        <li class="option-item"><label><input type="radio" name="q59" value="d"> d. 31.75</label></li>
+      </ul>
+    </div>
+
+    <div class="question-card" id="q60">
+      <div class="q-title">60. দ্রবণের ____________ গাড়ত্ব উষ্ণতার উপর নির্ভর করে না।</div>
+      <ul class="options-list">
+        <li class="option-item"><label><input type="radio" name="q60" value="a"> a. মোলার</label></li>
+        <li class="option-item"><label><input type="radio" name="q60" value="b"> b. মোলাল</label></li>
+        <li class="option-item"><label><input type="radio" name="q60" value="c"> c. নরম্যাল</label></li>
+        <li class="option-item"><label><input type="radio" name="q60" value="d"> d. ফর্ম্যাল</label></li>
+      </ul>
+    </div>
+
+    <h3>স্তম্ভ মেলানো (Column Matching)</h3>
+
+    <div class="question-card" id="q61">
+      <div class="q-title">61. স্তম্ভ-I এর সাথে স্তম্ভ-II মেলাও:</div>
+      <table>
+        <tr><th>স্তম্ভ-I</th><th>স্তম্ভ-II</th></tr>
+        <tr><td>1. স্থিরানুপাত সূত্র</td><td>C. উপাদান মৌলগুলির ভরের অনুপাত স্থির থাকে</td></tr>
+        <tr><td>2. গে-লুসাকের গ্যাস আয়তন সূত্র</td><td>D. বিক্রিয়ক ও বিক্রিয়াজাত পদার্থের অণুগুলি সরল অনুপাতে থাকে</td></tr>
+        <tr><td>3. গুণানুপাত সূত্র</td><td>A. ভরগুলির মধ্যে একটি সরল অনুপাত বর্তমান</td></tr>
+        <tr><td>4. মিথোনুপাত সূত্র</td><td>B. ভরগুলির সরল অনুপাত বা উপগুণিতকের অনুপাতে যুক্ত হয়</td></tr>
+      </table>
+      <ul class="options-list">
+        <li class="option-item"><label><input type="radio" name="q61" value="a"> a. 1-A, 2-B, 3-C, 4-D</label></li>
+        <li class="option-item"><label><input type="radio" name="q61" value="b"> b. 1-C, 2-D, 3-A, 4-B</label></li>
+        <li class="option-item"><label><input type="radio" name="q61" value="c"> c. 1-D, 2-C, 3-B, 4-A</label></li>
+        <li class="option-item"><label><input type="radio" name="q61" value="d"> d. 1-B, 2-A, 3-D, 4-C</label></li>
+      </ul>
+    </div>
+
+    <div class="question-card" id="q62">
+      <div class="q-title">62. স্তম্ভ-I এর সাথে স্তম্ভ-II মেলাও:</div>
+      <table>
+        <tr><th>স্তম্ভ-I</th><th>স্তম্ভ-II</th></tr>
+        <tr><td>1. 1 মিলিমোল CO<sub>2</sub>-এর ভর</td><td>D. 0.044 g</td></tr>
+        <tr><td>2. 1 মিলিমোল SO<sub>2</sub>-তে অণুর সংখ্যা</td><td>A. 6.022 × 10<sup>20</sup> টি</td></tr>
+        <tr><td>3. 3.6 g NH<sub>4</sub><sup>+</sup>-তে ইলেকট্রন সংখ্যা</td><td>B. 1.2044 × 10<sup>24</sup> টি</td></tr>
+        <tr><td>4. 1 মিলিমোল মিথেনে ইলেকট্রন সংখ্যা</td><td>C. 6.022 × 10<sup>21</sup> টি</td></tr>
+      </table>
+      <ul class="options-list">
+        <li class="option-item"><label><input type="radio" name="q62" value="a"> a. 1-D, 2-A, 3-B, 4-C</label></li>
+        <li class="option-item"><label><input type="radio" name="q62" value="b"> b. 1-A, 2-B, 3-C, 4-D</label></li>
+        <li class="option-item"><label><input type="radio" name="q62" value="c"> c. 1-C, 2-D, 3-A, 4-B</label></li>
+        <li class="option-item"><label><input type="radio" name="q62" value="d"> d. 1-B, 2-C, 3-D, 4-A</label></li>
+      </ul>
+    </div>
+
+    <div class="question-card" id="q63">
+      <div class="q-title">63. স্তম্ভ-I এর সাথে স্তম্ভ-II মেলাও:</div>
+      <table>
+        <tr><th>স্তম্ভ-I</th><th>স্তম্ভ-II</th></tr>
+        <tr><td>1. Al<sub>2</sub>(SO<sub>4</sub>)<sub>3</sub>-এর তুল্যাঙ্কভার</td><td>D. 57</td></tr>
+        <tr><td>2. SO<sub>4</sub><sup>2-</sup> মূলকের তুল্যাঙ্কভার</td><td>A. 48</td></tr>
+        <tr><td>3. প্রশম মাধ্যমে KMnO<sub>4</sub>-এর তুল্যাঙ্কভার</td><td>B. 52.7</td></tr>
+        <tr><td>4. অক্সালিক অ্যাসিডের তুল্যাঙ্কভার</td><td>C. 63</td></tr>
+      </table>
+      <ul class="options-list">
+        <li class="option-item"><label><input type="radio" name="q63" value="a"> a. 1-A, 2-B, 3-C, 4-D</label></li>
+        <li class="option-item"><label><input type="radio" name="q63" value="b"> b. 1-B, 2-C, 3-D, 4-A</label></li>
+        <li class="option-item"><label><input type="radio" name="q63" value="c"> c. 1-C, 2-D, 3-A, 4-B</label></li>
+        <li class="option-item"><label><input type="radio" name="q63" value="d"> d. 1-D, 2-A, 3-B, 4-C</label></li>
+      </ul>
+    </div>
+
+    <div class="question-card" id="q64">
+      <div class="q-title">64. স্তম্ভ-I এর সাথে স্তম্ভ-II মেলাও:</div>
+      <table>
+        <tr><th>স্তম্ভ-I</th><th>স্তম্ভ-II</th></tr>
+        <tr><td>1. প্রতি লিটার দ্রবণে 1 g তুল্যাঙ্ক দ্রাব</td><td>B. 1(N) দ্রবণ</td></tr>
+        <tr><td>2. প্রতি লিটার দ্রবণে দ্রাব অণুর মোল সংখ্যা</td><td>C. মোলারিটি</td></tr>
+        <tr><td>3. 1 গ্রাম-পরমাণু সালফার</td><td>D. 32 g</td></tr>
+        <tr><td>4. STP-তে 22.4 L CO<sub>2</sub> গ্যাস</td><td>A. 1 × 6.02 × 10<sup>23</sup> টি অণু</td></tr>
+      </table>
+      <ul class="options-list">
+        <li class="option-item"><label><input type="radio" name="q64" value="a"> a. 1-B, 2-C, 3-D, 4-A</label></li>
+        <li class="option-item"><label><input type="radio" name="q64" value="b"> b. 1-A, 2-B, 3-C, 4-D</label></li>
+        <li class="option-item"><label><input type="radio" name="q64" value="c"> c. 1-C, 2-D, 3-A, 4-B</label></li>
+        <li class="option-item"><label><input type="radio" name="q64" value="d"> d. 1-D, 2-A, 3-B, 4-C</label></li>
+      </ul>
+    </div>
+
+    <h3>ক্রমানুসারে সাজানো (Rearrangement)</h3>
+
+    <div class="question-card" id="q65">
+      <div class="q-title">65. ডুলং ও পেটিটের সূত্র দ্বারা সঠিক পারমাণবিক ওজন নির্ণয়ের ক্রম হলো—</div>
+      <ul class="options-list">
+        <li class="option-item"><label><input type="radio" name="q65" value="a"> a. পারমাণবিক তাপ → আনুমানিক পারমাণবিক ওজন → যোজ্যতা → সঠিক পারমাণবিক ওজন</label></li>
+        <li class="option-item"><label><input type="radio" name="q65" value="b"> b. আনুমানিক পারমাণবিক ওজন → পারমাণবিক তাপ → যোজ্যতা → সঠিক পারমাণবিক ওজন</label></li>
+        <li class="option-item"><label><input type="radio" name="q65" value="c"> c. সঠিক পারমাণবিক ওজন → পারমাণবিক তাপ → আনুমানিক পারমাণবিক ওজন → যোজ্যতা</label></li>
+        <li class="option-item"><label><input type="radio" name="q65" value="d"> d. যোজ্যতা → সঠিক পারমাণবিক ওজন → আনুমানিক পারমাণবিক ওজন → পারমাণবিক তাপ</label></li>
+      </ul>
+    </div>
+
+    <div class="question-card" id="q66">
+      <div class="q-title">66. আণবিক সংকেত নির্ণয় করার সঠিক ক্রমটি হলো—</div>
+      <ul class="options-list">
+        <li class="option-item"><label><input type="radio" name="q66" value="a"> a. স্থূলসংকেত → বাষ্পঘনত্ব → গ্যাসের আয়তন সংযুতি → আণবিক সংকেত</label></li>
+        <li class="option-item"><label><input type="radio" name="q66" value="b"> b. বাষ্পঘনত্ব → স্থূলসংকেত → গ্যাসের আয়তন সংযুতি → আণবিক সংকেত</label></li>
+        <li class="option-item"><label><input type="radio" name="q66" value="c"> c. স্থূলসংকেত → গ্যাসের আয়তন সংযুতি → বাষ্পঘনত্ব → আণবিক সংকেত</label></li>
+        <li class="option-item"><label><input type="radio" name="q66" value="d"> d. গ্যাসের আয়তন সংযুতি → স্থূলসংকেত → বাষ্পঘনত্ব → আণবিক সংকেত</label></li>
+      </ul>
+    </div>
+
+    <div class="question-card" id="q67">
+      <div class="q-title">67. আণবিক সংকেত নির্ণয় করার সঠিক ধাপের ক্রম হলো—</div>
+      <ul class="options-list">
+        <li class="option-item"><label><input type="radio" name="q67" value="a"> a. বিভিন্ন মৌলগুলির ভরের শতকরা নির্ণয় → বিভিন্ন মৌলগুলির পরমাণু সংখ্যার অনুপাত নির্ণয় → মৌলগুলির পরমাণুর লঘিষ্ঠতম পূর্ণসংখ্যার অনুপাত নির্ণয় → উপযুক্ত পূর্ণসংখ্যা দিয়ে গুণ করে আণবিক সংকেত পাওয়া যায়</label></li>
+      </ul>
+    </div>
+
+    <h3>বিবৃতি ও ব্যাখ্যাধর্মী প্রশ্ন (Assertion-Reasoning)</h3>
+    <p style="font-size:14px; background:#edf2f7; padding:10px; border-radius:5px;">
+      <strong>নির্দেশাবলী:</strong><br>
+      a. A ও R দুটিই সত্য এবং R হলো A-এর সঠিক ব্যাখ্যা।<br>
+      b. A ও R দুটিই সত্য কিন্তু R, A-এর সঠিক ব্যাখ্যা নয়।<br>
+      c. A সঠিক কিন্তু R সঠিক নয়।<br>
+      d. A সঠিক নয় কিন্তু R সঠিক।
+    </p>
+
+    <div class="question-card" id="q68">
+      <div class="q-title">68. বিবৃতি (A): উষ্ণতা বৃদ্ধি বা হ্রাসে দ্রবণের মোলালিটির কোনো পরিবর্তন হয় না।<br>
+      ব্যাখ্যা (R): মোলালিটি উষ্ণতা নিরপেক্ষ।</div>
+      <ul class="options-list">
+        <li class="option-item"><label><input type="radio" name="q68" value="a"> a. A ও R দুটিই সত্য এবং R হলো A-এর সঠিক ব্যাখ্যা</label></li>
+        <li class="option-item"><label><input type="radio" name="q68" value="b"> b. A ও R দুটিই সত্য কিন্তু R, A-এর সঠিক ব্যাখ্যা নয়</label></li>
+        <li class="option-item"><label><input type="radio" name="q68" value="c"> c. A সঠিক কিন্তু R সঠিক নয়</label></li>
+        <li class="option-item"><label><input type="radio" name="q68" value="d"> d. A সঠিক নয় কিন্তু R সঠিক</label></li>
+      </ul>
+    </div>
+
+    <div class="question-card" id="q69">
+      <div class="q-title">69. বিবৃতি (A): মৌলের তুল্যাঙ্কভার কখনোই শূন্য হয় না।<br>
+      ব্যাখ্যা (R): কোনো মৌলের পারমাণবিক ভর শূন্য হয়।</div>
+      <ul class="options-list">
+        <li class="option-item"><label><input type="radio" name="q69" value="a"> a. A ও R দুটিই সত্য এবং R হলো A-এর সঠিক ব্যাখ্যা</label></li>
+        <li class="option-item"><label><input type="radio" name="q69" value="b"> b. A ও R দুটিই সত্য কিন্তু R, A-এর সঠিক ব্যাখ্যা নয়</label></li>
+        <li class="option-item"><label><input type="radio" name="q69" value="c"> c. A সঠিক কিন্তু R সঠিক নয়</label></li>
+        <li class="option-item"><label><input type="radio" name="q69" value="d"> d. A সঠিক নয় কিন্তু R সঠিক</label></li>
+      </ul>
+    </div>
+
+    <h3>সত্য/মিথ্যা ধর্মী প্রশ্ন (True and False Type)</h3>
+
+    <div class="question-card" id="q70">
+      <div class="q-title">70. বিবৃতি A: x g একটি মৌল থেকে y g ক্লোরাইড পাওয়া যায়। মৌলটির তুল্যাঙ্কভার = (35.5x) / (y - x)<br>
+      বিবৃতি B: একটি ত্রিযোজী ধাতুর তুল্যাঙ্কভার 32.70 হলে ধাতুর ক্লোরাইডের আণবিক গুরুত্ব হবে 204.60।</div>
+      <ul class="options-list">
+        <li class="option-item"><label><input type="radio" name="q70" value="a"> a. A সত্য, B মিথ্যা</label></li>
+        <li class="option-item"><label><input type="radio" name="q70" value="b"> b. A মিথ্যা, B সত্য</label></li>
+        <li class="option-item"><label><input type="radio" name="q70" value="c"> c. A ও B উভয়ই সত্য</label></li>
+        <li class="option-item"><label><input type="radio" name="q70" value="d"> d. A ও B উভয়ই মিথ্যা</label></li>
+      </ul>
+    </div>
+
+    <div class="question-card" id="q71">
+      <div class="q-title">71. বিবৃতি A: 1 amu = 1.6605 × 10<sup>-27</sup> kg<br>
+      বিবৃতি B: 1 মোল = 1.023 × 10<sup>23</sup> টি অণু<br>
+      বিবৃতি C: 0.1 g ভরের জলের ফোঁটায় অণুর সংখ্যা 3.35 × 10<sup>21</sup> টি<br>
+      বিবৃতি D: 1.8228 × 10<sup>6</sup> মোল ইলেকট্রনের ভর 1 kg হবে</div>
+      <ul class="options-list">
+        <li class="option-item"><label><input type="radio" name="q71" value="a"> a. A, B সত্য কিন্তু C, D মিথ্যা</label></li>
+        <li class="option-item"><label><input type="radio" name="q71" value="b"> b. B, C সত্য কিন্তু A, D মিথ্যা</label></li>
+        <li class="option-item"><label><input type="radio" name="q71" value="c"> c. A, C, D সত্য কিন্তু B মিথ্যা</label></li>
+        <li class="option-item"><label><input type="radio" name="q71" value="d"> d. সবকটি বিবৃতিই সত্য</label></li>
+      </ul>
+    </div>
+
+    <div class="controls">
+      <button type="button" class="btn" onclick="checkQuiz()">Submit Answers</button>
+    </div>
+  </form>
+
+  <div class="answer-key-section">
+    <h2>🔑 Answer Keys (উত্তর সংকেত)</h2>
+    <div class="answer-key-grid">
+      <div class="key-item">1. c</div>
+      <div class="key-item">2. a</div>
+      <div class="key-item">3. c</div>
+      <div class="key-item">4. b</div>
+      <div class="key-item">5. a</div>
+      <div class="key-item">6. b</div>
+      <div class="key-item">7. a</div>
+      <div class="key-item">8. a</div>
+      <div class="key-item">9. d</div>
+      <div class="key-item">10. b</div>
+      <div class="key-item">11. a</div>
+      <div class="key-item">12. d</div>
+      <div class="key-item">13. b</div>
+      <div class="key-item">14. b</div>
+      <div class="key-item">15. d</div>
+      <div class="key-item">16. c</div>
+      <div class="key-item">17. c</div>
+      <div class="key-item">18. a</div>
+      <div class="key-item">19. c</div>
+      <div class="key-item">20. c</div>
+      <div class="key-item">21. c</div>
+      <div class="key-item">22. a</div>
+      <div class="key-item">23. b</div>
+      <div class="key-item">24. c</div>
+      <div class="key-item">25. d</div>
+      <div class="key-item">26. b</div>
+      <div class="key-item">27. b</div>
+      <div class="key-item">28. d</div>
+      <div class="key-item">29. d</div>
+      <div class="key-item">30. a</div>
+      <div class="key-item">31. a</div>
+      <div class="key-item">32. b</div>
+      <div class="key-item">33. c</div>
+      <div class="key-item">34. c</div>
+      <div class="key-item">35. d</div>
+      <div class="key-item">36. a</div>
+      <div class="key-item">37. c</div>
+      <div class="key-item">38. a</div>
+      <div class="key-item">39. a</div>
+      <div class="key-item">40. d</div>
+      <div class="key-item">41. c</div>
+      <div class="key-item">42. c</div>
+      <div class="key-item">43. c</div>
+      <div class="key-item">44. d</div>
+      <div class="key-item">45. b</div>
+      <div class="key-item">46. a</div>
+      <div class="key-item">47. a</div>
+      <div class="key-item">48. c</div>
+      <div class="key-item">49. a</div>
+      <div class="key-item">50. a</div>
+      <div class="key-item">51. d</div>
+      <div class="key-item">52. c</div>
+      <div class="key-item">53. c</div>
+      <div class="key-item">54. d</div>
+      <div class="key-item">55. c</div>
+      <div class="key-item">56. c</div>
+      <div class="key-item">57. a</div>
+      <div class="key-item">58. c</div>
+      <div class="key-item">59. d</div>
+      <div class="key-item">60. b</div>
+      <div class="key-item">61. b</div>
+      <div class="key-item">62. a</div>
+      <div class="key-item">63. d</div>
+      <div class="key-item">64. a</div>
+      <div class="key-item">65. a</div>
+      <div class="key-item">66. d</div>
+      <div class="key-item">67. a</div>
+      <div class="key-item">68. a</div>
+      <div class="key-item">69. c</div>
+      <div class="key-item">70. c</div>
+      <div class="key-item">71. c</div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const correctAnswers = {
+    q1: 'c', q2: 'a', q3: 'c', q4: 'b', q5: 'a', q6: 'b', q7: 'a', q8: 'a', q9: 'd', q10: 'b',
+    q11: 'a', q12: 'd', q13: 'b', q14: 'b', q15: 'd', q16: 'c', q17: 'c', q18: 'a', q19: 'c', q20: 'c',
+    q21: 'c', q22: 'a', q23: 'b', q24: 'c', q25: 'd', q26: 'b', q27: 'b', q28: 'd', q29: 'd', q30: 'a',
+    q31: 'a', q32: 'b', q33: 'c', q34: 'c', q35: 'd', q36: 'a', q37: 'c', q38: 'a', q39: 'a', q40: 'd',
+    q41: 'c', q42: 'c', q43: 'c', q44: 'd', q45: 'b', q46: 'a', q47: 'a', q48: 'c', q49: 'a', q50: 'a',
+    q51: 'd', q52: 'c', q53: 'c', q54: 'd', q55: 'c', q56: 'c', q57: 'a', q58: 'c', q59: 'd', q60: 'b',
+    q61: 'b', q62: 'a', q63: 'd', q64: 'a', q65: 'a', q66: 'd', q67: 'a', q68: 'a', q69: 'c', q70: 'c', q71: 'c'
+  };
+
+  function checkQuiz() {
+    let score = 0;
+    const total = Object.keys(correctAnswers).length;
+
+    // Reset styles
+    document.querySelectorAll('.option-item').forEach(el => {
+      el.classList.remove('correct', 'incorrect');
+    });
+
+    for (let i = 1; i <= total; i++) {
+      const qKey = 'q' + i;
+      const selectedOption = document.querySelector(`input[name="${qKey}"]:checked`);
+      const correctVal = correctAnswers[qKey];
+      
+      const qCard = document.getElementById(qKey);
+      if(!qCard) continue;
+
+      const options = qCard.querySelectorAll('.option-item');
+
+      options.forEach(opt => {
+        const radio = opt.querySelector('input');
+        if (radio.value === correctVal) {
+          opt.classList.add('correct');
+        }
+        if (selectedOption && radio === selectedOption && selectedOption.value !== correctVal) {
+          opt.classList.add('incorrect');
+        }
+      });
+
+      if (selectedOption && selectedOption.value === correctVal) {
+        score++;
+      }
+    }
+
+    const scoreDisplay = document.getElementById('scoreDisplay');
+    scoreDisplay.style.display = 'block';
+    scoreDisplay.innerHTML = `আপনার প্রাপ্ত নম্বর: ${score} / ${total}`;
+    scoreDisplay.scrollIntoView({ behavior: 'smooth' });
+  }
+</script>
 
 </body>
 </html>
